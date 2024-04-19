@@ -1,0 +1,7 @@
+{
+  "name": "cyberpump",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
