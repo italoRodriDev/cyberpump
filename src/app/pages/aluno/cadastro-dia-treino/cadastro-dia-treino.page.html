@@ -1,0 +1,39 @@
+<ion-header mode="md">
+  <ion-toolbar color="primary">
+    <ion-buttons>
+      <ion-button (click)="onClickBack()">
+        <ion-icon slot="icon-only" name="arrow-back-outline"></ion-icon>
+      </ion-button>
+      <ion-title>Cadastro de dia</ion-title>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content mode="md">
+  <br />
+  <ion-item-divider>
+    <ion-title color="secondary">DADOS DO DIA DE TREINO</ion-title>
+  </ion-item-divider>
+  <ion-card mode="ios">
+    <ion-card-content>
+      <form>
+        <ion-item>
+          <ion-input placeholder="Digite o nome do aluno(a)"></ion-input>
+        </ion-item>
+        <br />
+        <ion-item>
+          <ion-input placeholder="Ênfase"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-input placeholder="Observações"></ion-input>
+        </ion-item>
+      </form>
+    </ion-card-content>
+    <ion-card-content>
+      <ion-button color="secondary">
+        <ion-label color="light">Salvar</ion-label>
+      </ion-button>
+    </ion-card-content>
+  </ion-card>
+</ion-content>
+

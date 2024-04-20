@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="325" height="83" viewBox="0 0 325 83">
+  <defs>
+    <filter id="CYBERPUMP" x="0" y="0" width="325" height="65" filterUnits="userSpaceOnUse">
+      <feOffset dx="6" dy="5" input="SourceAlpha"/>
+      <feGaussianBlur result="blur"/>
+      <feFlood flood-color="#00edff"/>
+      <feComposite operator="in" in2="blur"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+  </defs>
+  <g id="Grupo_41" data-name="Grupo 41" transform="translate(-56 -383)">
+    <g id="Grupo_1" data-name="Grupo 1" transform="translate(56 382.913)">
+      <g transform="matrix(1, 0, 0, 1, 0, 0.09)" filter="url(#CYBERPUMP)">
+        <text id="CYBERPUMP-2" data-name="CYBERPUMP" transform="translate(0 58)" fill="#3a1b74" font-size="83" font-family="SDGlitchDemoRegular, SDGlitchDemo"><tspan x="0" y="0">CYBERPUMP</tspan></text>
+      </g>
+      <text id="SUPLEMENTOS_E_VITAMINAS" data-name="SUPLEMENTOS E VITAMINAS" transform="translate(61 80.087)" font-size="13" font-family="LEMONMILK-Medium, LEMON MILK" font-weight="500"><tspan x="0" y="0">SUPLEMENTOS E VITAMINAS</tspan></text>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,51 @@
+<ion-header mode="md">
+  <ion-toolbar color="primary">
+    <ion-buttons>
+      <ion-button (click)="onClickBack()">
+        <ion-icon slot="icon-only" name="arrow-back-outline"></ion-icon>
+      </ion-button>
+      <ion-title>Cadastro do aluno</ion-title>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content mode="md">
+  <br />
+  <ion-item-divider>
+    <ion-title color="secondary">ALUNOS</ion-title>
+  </ion-item-divider>
+  <ion-card mode="ios">
+    <ion-card-content>
+      <form>
+        <ion-item>
+          <ion-input placeholder="Digite o nome do exercício"></ion-input>
+        </ion-item>
+        <br />
+        <ion-item>
+          <ion-select label="Ênfase" placeholder="Selecionar">
+            <ion-select-option>Peito</ion-select-option>
+            <ion-select-option>Ombros</ion-select-option>
+          </ion-select>
+        </ion-item>
+        <br />
+        <ion-item>
+          <ion-input placeholder="Digite o número de séries"></ion-input>
+        </ion-item>
+        <br />
+        <ion-item>
+          <ion-input placeholder="Digite o número de repetições"></ion-input>
+        </ion-item>
+        <br />
+        <ion-item>
+          <ion-input placeholder="Observações (Opcional)"></ion-input>
+        </ion-item>
+        <br />
+      </form>
+    </ion-card-content>
+    <ion-card-content>
+      <ion-button color="secondary">
+        <ion-label color="light">Cadastrar</ion-label>
+      </ion-button>
+    </ion-card-content>
+  </ion-card>
+</ion-content>
