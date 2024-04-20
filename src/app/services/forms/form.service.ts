@@ -288,6 +288,25 @@ export class FormService {
     doencas: this.reqValidator
   });
 
+  formDiaTreino: FormGroup = this.fb.group({
+    id: [],
+    idAluno: [],
+    dia: this.reqValidator,
+    enfase: this.reqValidator,
+    obs: this.reqValidator
+  });
+
+  formExercicio: FormGroup = this.fb.group({
+    id: [],
+    idAluno: [],
+    idDiaTreino: [],
+    nome: this.nameValidator,
+    enfase: this.reqValidator,
+    series: this.reqValidator,
+    repeticoes: this.reqValidator,
+    obs: this.reqValidator
+  });
+
   constructor(private fb: FormBuilder) {
     this.resetDataForm();
   }

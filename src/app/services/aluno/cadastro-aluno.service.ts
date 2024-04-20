@@ -116,7 +116,6 @@ export class CadastroAlunoService {
       .remove()
       .then((value) => {
         this.alertService.showToast('Excludo com sucesso!');
-        this.navCtrl.back();
       })
       .catch((error) => {
         this.alertService.showToast('Erro ao excluir cadastro!');
