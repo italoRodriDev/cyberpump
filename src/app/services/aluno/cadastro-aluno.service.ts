@@ -44,9 +44,9 @@ export class CadastroAlunoService {
       .child('ID_PROFESSOR')
       .on('value', (snapshot) => {
         const data = snapshot.val();
+        this.bsAlunos.next([]);
         if (data) {
           const array = Object.keys(data).map((index) => data[index]);
-          this.bsAlunos.next([]);
           this.bsAlunos.next(array);
         }
       });

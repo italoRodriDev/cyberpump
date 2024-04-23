@@ -1,64 +1,78 @@
 <ion-header mode="md">
   <ion-toolbar color="primary">
     <ion-buttons>
-      <img class="logo" src="assets/images/logo.svg">
+      <img class="logo" src="assets/images/logo.svg" />
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-<br />
-<section>
-  <ion-segment color="secondary" value="ALUNOS">
-    <ion-segment-button value="ALUNOS">
-      <ion-chip color="secondary">
-        Alunos
-      </ion-chip>
-    </ion-segment-button>
-    <ion-segment-button value="NUTRICIONISTAS">
-      <ion-chip color="secondary">
-        Nutricionistas
-      </ion-chip>
-    </ion-segment-button>
-  </ion-segment>
-</section>
- <section>
-  <br/>
-  <ion-item-divider>
-    <ion-title color="dark">Alunos</ion-title>
-  </ion-item-divider>
-  <br/>
-  <ion-list>
-    <ion-accordion-group>
-      <ion-accordion *ngFor="let item of listAlunos">
-        <ion-item slot="header">
+  <br />
+  <section>
+    <ion-segment
+      (ionChange)="onChangeMenu($event)"
+      color="secondary"
+      [value]="listMenu[0]?.nome"
+    >
+      <ion-segment-button *ngFor="let item of listMenu" [value]="item?.nome">
+        <ion-chip color="secondary"> {{ item?.nome }} </ion-chip>
+      </ion-segment-button>
+    </ion-segment>
+  </section>
+  <section *ngIf="pageMenu == 'ALUNOS'">
+    <br />
+    <ion-item-divider>
+      <ion-title color="dark">Alunos</ion-title>
+    </ion-item-divider>
+    <br />
+    <ion-list>
+      <ion-accordion-group>
+        <ion-accordion *ngFor="let item of listAlunos">
+          <ion-item slot="header">
             <ion-label>
               <p>
-                <ion-title color="dark" style="padding-left: 0;">{{ (item.nome.length > 35 ? item.nome.substring(0, 35)+ '...' : item.nome) }}</ion-title>
-                <br/>
+                <ion-title color="dark" style="padding-left: 0"
+                  >{{ (item.nome.length > 35 ? item.nome.substring(0, 35)+ '...'
+                  : item.nome) }}</ion-title
+                >
+                <br />
                 <ion-label>Academia: {{ item.academia }}</ion-label>
               </p>
             </ion-label>
-        </ion-item>
-        <ion-item slot="content">
-          <ion-row>
-            <ion-button (click)="onClickEdit(item)" color="secondary" shape="round">
-              <ion-label color="light">Treino</ion-label>
-            </ion-button>
-            <ion-button (click)="onClickRemove(item)" color="secondary" shape="round">
-              <ion-label color="light">Excluir</ion-label>
-            </ion-button>
-          </ion-row>
-        </ion-item>
-      </ion-accordion>
-    </ion-accordion-group>
-    <app-skeleton-list *ngIf="!listAlunos.length" [image]="'vetor_lista_vazia.svg'"></app-skeleton-list>
-    <app-animation-list *ngIf="listAlunos.length"></app-animation-list>
-  </ion-list>
- </section>
- <ion-fab slot="fixed" vertical="bottom" horizontal="end">
-  <ion-fab-button (click)="onClickNew()" color="secondary">
-    <ion-icon name="add"></ion-icon>
-  </ion-fab-button>
-</ion-fab>
+          </ion-item>
+          <ion-item slot="content">
+            <ion-row>
+              <ion-button
+                (click)="onClickEdit(item)"
+                color="secondary"
+                shape="round"
+              >
+                <ion-label color="light">Treino</ion-label>
+              </ion-button>
+              <ion-button
+                (click)="onClickRemove(item)"
+                color="secondary"
+                shape="round"
+              >
+                <ion-label color="light">Excluir</ion-label>
+              </ion-button>
+            </ion-row>
+          </ion-item>
+        </ion-accordion>
+      </ion-accordion-group>
+      <app-skeleton-list
+        *ngIf="!listAlunos.length"
+        [image]="'vetor_lista_vazia.svg'"
+      ></app-skeleton-list>
+    </ion-list>
+  </section>
+  <br />
+  <br />
+  <br />
+  <app-animation-list *ngIf="listAlunos.length"></app-animation-list>
+  <ion-fab slot="fixed" vertical="bottom" horizontal="end">
+    <ion-fab-button (click)="onClickNew()" color="secondary">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
 </ion-content>

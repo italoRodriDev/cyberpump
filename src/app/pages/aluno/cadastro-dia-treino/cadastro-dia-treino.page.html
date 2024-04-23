@@ -14,13 +14,13 @@
   <ion-item-divider>
     <ion-title color="secondary">DADOS</ion-title>
   </ion-item-divider>
-  <ion-card mode="ios" *ngIf="diaTreino != null">
+  <ion-card mode="ios" *ngIf="aluno != null && diaTreino != null">
     <ion-card-content>
-      <ion-card-title>{{ aluno?.nome }}</ion-card-title>
+      <ion-card-title>{{ aluno.nome }}</ion-card-title>
       <ion-label>
-        <p>Dia: {{ diaTreino?.dia }}</p>
-        <p>Ênfase: {{ diaTreino?.enfase }}</p>
-        <p>Obs: {{ diaTreino?.obs }}</p>
+        <p>Dia: {{ diaTreino.dia }}</p>
+        <p>Ênfase: {{ diaTreino.enfase }}</p>
+        <p>Obs: {{ diaTreino.obs }}</p>
       </ion-label>
     </ion-card-content>
     <ion-card-content>

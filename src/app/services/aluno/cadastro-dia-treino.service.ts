@@ -47,9 +47,9 @@ export class CadastroDiaTreinoService {
       .child(aluno.id)
       .on('value', (snapshot) => {
         const data = snapshot.val();
+        this.bsDiasTreino.next([]);
         if (data) {
           const array = Object.keys(data).map((index) => data[index]);
-          this.bsDiasTreino.next([]);
           this.bsDiasTreino.next(array);
         }
       });

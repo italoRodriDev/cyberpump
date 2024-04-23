@@ -50,14 +50,16 @@ export class CadastroDiaTreinoPage implements OnInit {
       if (data) {
         this.diaTreino = data;
         this.setDataForm();
-        this.cadastroExercicioService.getData(this.aluno!, this.diaTreino!);
-        this.cadastroExercicioService.bsExercicios.subscribe((list) => {
-          this.listExercicios = list;
-        });
       } else {
         this.blockEdit = false;
       }
     });
+    if (this.aluno != null && this.diaTreino != null) {
+      this.cadastroExercicioService.getData(this.aluno!, this.diaTreino!);
+      this.cadastroExercicioService.bsExercicios.subscribe((list) => {
+        this.listExercicios = list;
+      });
+    }
   }
 
   setDataForm() {

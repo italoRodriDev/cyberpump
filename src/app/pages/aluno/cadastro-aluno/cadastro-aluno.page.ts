@@ -38,15 +38,17 @@ export class CadastroAlunoPage implements OnInit {
       if (data) {
         this.aluno = data;
         this.setDataForm();
-
-        this.cadastroDiasTreinoService.getData(data);
-        this.cadastroDiasTreinoService.listDiasTreino.subscribe((list) => {
-          this.listDiasTreino = list;
-        });
       } else {
         this.blockEdit = false;
       }
     });
+
+    if (this.aluno != null) {
+      this.cadastroDiasTreinoService.getData(this.aluno!);
+      this.cadastroDiasTreinoService.listDiasTreino.subscribe((list) => {
+        this.listDiasTreino = list;
+      });
+    }
   }
 
   setDataForm() {

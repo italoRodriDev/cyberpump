@@ -49,9 +49,9 @@ export class CadastroExerciciosService {
       .child(diaTreino.id)
       .on('value', (snapshot) => {
         const data = snapshot.val();
+        this.bsExercicios.next([]);
         if (data) {
           const array = Object.keys(data).map((index) => data[index]);
-          this.bsExercicios.next([]);
           this.bsExercicios.next(array);
         }
       });
