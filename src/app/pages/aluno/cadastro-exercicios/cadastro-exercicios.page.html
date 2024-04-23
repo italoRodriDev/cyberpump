@@ -11,12 +11,40 @@
 
 <ion-content mode="md">
   <br />
-  <ion-title>{{ (aluno != null ? aluno.nome :  '') }}</ion-title>
-  <br />
   <ion-item-divider>
-    <ion-title color="secondary">DADOS DO TREINO</ion-title>
+    <ion-title color="secondary">DADOS</ion-title>
   </ion-item-divider>
-  <ion-card mode="ios">
+  <ion-card mode="ios" *ngIf="aluno != null && diaTreino != null">
+    <ion-card-content>
+      <ion-card-title>{{ aluno.nome }}</ion-card-title>
+      <ion-label>
+        <p>Dia: {{ diaTreino.dia }}</p>
+        <p>Ênfase: {{ diaTreino.enfase }}</p>
+        <p>Obs: {{ diaTreino.obs }}</p>
+      </ion-label>
+    </ion-card-content>
+    <ion-card-content *ngIf="exercicio != null">
+      <ion-card-title>Treino atual</ion-card-title>
+      <ion-label>
+        <p>Nome: {{ exercicio.nome }}</p>
+        <p>Ênfase: {{ exercicio.enfase }}</p>
+        <p>Séries: {{ exercicio.series }}</p>
+        <p>Repetições: {{ exercicio.repeticoes }}</p>
+        <p>Obs: {{ exercicio.obs }}</p>
+      </ion-label>
+    </ion-card-content>
+    <ion-card-content>
+      <ion-button
+        (click)="onClickEdit()"
+        *ngIf="aluno?.id != null && blockEdit == true"
+        color="secondary"
+        [disabled]="!form.valid"
+      >
+        <ion-label color="light">Editar</ion-label>
+      </ion-button>
+    </ion-card-content>
+  </ion-card>
+  <ion-card mode="ios" *ngIf="exercicio == null || blockEdit == false">
     <ion-card-content>
       <form [formGroup]="form">
         <ion-item [disabled]="blockEdit">
@@ -86,14 +114,6 @@
     <ion-card-content>
       <ion-row>
         <ion-button
-          (click)="onClickEdit()"
-          *ngIf="aluno?.id != null && blockEdit == true"
-          color="secondary"
-          [disabled]="!form.valid"
-        >
-          <ion-label color="light">Editar</ion-label>
-        </ion-button>
-        <ion-button
           *ngIf="blockEdit == false || !form.controls['id'].valid"
           (click)="onClickSave()"
           color="secondary"
@@ -104,4 +124,8 @@
       </ion-row>
     </ion-card-content>
   </ion-card>
+  <br />
+  <br />
+  <br />
+  <app-animation-list></app-animation-list>
 </ion-content>

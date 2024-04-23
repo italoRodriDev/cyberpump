@@ -146,14 +146,26 @@
             >
               <ion-label color="light">Informações</ion-label>
             </ion-button>
-            <ion-button (click)="onClickRemoveDiaTreino(item)" color="secondary" shape="round">
+            <ion-button
+              (click)="onClickRemoveDiaTreino(item)"
+              color="secondary"
+              shape="round"
+            >
               <ion-label color="light">Excluir</ion-label>
             </ion-button>
           </ion-row>
         </ion-item>
       </ion-accordion>
     </ion-accordion-group>
+    <app-skeleton-list
+      *ngIf="!listDiasTreino.length"
+      [image]="'vetor_lista_vazia.svg'"
+    ></app-skeleton-list>
   </ion-list>
+  <br />
+  <br />
+  <br />
+  <app-animation-list *ngIf="listDiasTreino.length"></app-animation-list>
   <ion-fab slot="fixed" vertical="bottom" horizontal="end">
     <ion-fab-button (click)="onClickCadastroDiaTreino()" color="secondary">
       <ion-icon name="add"></ion-icon>

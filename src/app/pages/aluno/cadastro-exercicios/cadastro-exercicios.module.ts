@@ -7,6 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { CadastroExerciciosPageRoutingModule } from './cadastro-exercicios-routing.module';
 
 import { CadastroExerciciosPage } from './cadastro-exercicios.page';
+import { SharedComponentsModule } from 'src/app/components/shared-components.module';
 
 @NgModule({
   imports: [
@@ -14,7 +15,8 @@ import { CadastroExerciciosPage } from './cadastro-exercicios.page';
     FormsModule,
     IonicModule,
     CadastroExerciciosPageRoutingModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    SharedComponentsModule
   ],
   declarations: [CadastroExerciciosPage]
 })

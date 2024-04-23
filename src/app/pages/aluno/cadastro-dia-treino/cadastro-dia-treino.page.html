@@ -134,8 +134,15 @@
         </ion-item>
       </ion-accordion>
     </ion-accordion-group>
+    <app-skeleton-list
+      *ngIf="!listExercicios.length"
+      [image]="'vetor_lista_vazia.svg'"
+    ></app-skeleton-list>
   </ion-list>
-
+  <br />
+  <br />
+  <br />
+  <app-animation-list *ngIf="listExercicios.length"></app-animation-list>
   <ion-fab slot="fixed" vertical="bottom" horizontal="end">
     <ion-fab-button (click)="onClickCadastroExercicio()" color="secondary">
       <ion-icon name="add"></ion-icon>

@@ -7,6 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { CadastroDiaTreinoPageRoutingModule } from './cadastro-dia-treino-routing.module';
 
 import { CadastroDiaTreinoPage } from './cadastro-dia-treino.page';
+import { SharedComponentsModule } from 'src/app/components/shared-components.module';
 
 @NgModule({
   imports: [
@@ -14,7 +15,8 @@ import { CadastroDiaTreinoPage } from './cadastro-dia-treino.page';
     FormsModule,
     IonicModule,
     CadastroDiaTreinoPageRoutingModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    SharedComponentsModule
   ],
   declarations: [CadastroDiaTreinoPage]
 })
