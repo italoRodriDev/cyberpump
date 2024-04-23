@@ -50,6 +50,13 @@ export class CadastroDiaTreinoService {
         this.bsDiasTreino.next([]);
         if (data) {
           const array = Object.keys(data).map((index) => data[index]);
+  
+          // Função de comparação para os dias da semana
+          const diasSemana = ['Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado', 'Domingo'];
+          array.sort((a, b) => {
+            return diasSemana.indexOf(a.dia) - diasSemana.indexOf(b.dia);
+          });
+  
           this.bsDiasTreino.next(array);
         }
       });

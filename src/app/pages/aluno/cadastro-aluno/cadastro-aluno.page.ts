@@ -16,7 +16,11 @@ export class CadastroAlunoPage implements OnInit {
   form: FormGroup = this.formService.formAluno;
   aluno: AlunoModel | undefined;
   listDoencasCronicas: Array<any> = this.formService.listDoencasCronicas;
+  listObjetivos: Array<any> = this.formService.listObjetivos;
+  listNiveis: Array<any> = this.formService.listNiveis;
+  listTiposTreino: Array<any> = this.formService.listSemana;
   blockEdit: boolean = false;
+  tipoTreino: any;
   listDiasTreino: Array<DiaTreinoModel> = [];
 
   constructor(
@@ -47,6 +51,7 @@ export class CadastroAlunoPage implements OnInit {
       this.cadastroDiasTreinoService.getData(this.aluno!);
       this.cadastroDiasTreinoService.listDiasTreino.subscribe((list) => {
         this.listDiasTreino = list;
+        this.validTypeTraining();
       });
     }
   }
@@ -54,6 +59,33 @@ export class CadastroAlunoPage implements OnInit {
   setDataForm() {
     this.blockEdit = true;
     this.form.patchValue(this.aluno!);
+  }
+
+  validTypeTraining() {
+    const numberDays = this.listDiasTreino.length;
+    switch (numberDays) {
+      case 1:
+        this.tipoTreino = this.listTiposTreino[5];
+        break;
+      case 2:
+        this.tipoTreino = this.listTiposTreino[0];
+        break;
+      case 3:
+        this.tipoTreino = this.listTiposTreino[1];
+        break;
+      case 4:
+        this.tipoTreino = this.listTiposTreino[2];
+        break;
+      case 5:
+        this.tipoTreino = this.listTiposTreino[3];
+        break;
+      case 6:
+        this.tipoTreino = this.listTiposTreino[4];
+        break;
+      default:
+        this.tipoTreino = this.listTiposTreino[5];
+        break;
+    }
   }
 
   onClickSave() {

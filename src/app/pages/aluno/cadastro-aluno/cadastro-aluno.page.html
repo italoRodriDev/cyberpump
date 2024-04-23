@@ -1,5 +1,5 @@
 <ion-header mode="md">
-  <ion-toolbar color="primary">
+  <ion-toolbar color="secondary">
     <ion-buttons>
       <ion-button (click)="onClickBack()">
         <ion-icon slot="icon-only" name="arrow-back-outline"></ion-icon>
@@ -12,23 +12,31 @@
 <ion-content mode="md">
   <br />
   <ion-item-divider>
-    <ion-title color="secondary">DADOS</ion-title>
+    <ion-title color="primary">DADOS</ion-title>
   </ion-item-divider>
   <ion-card mode="ios" *ngIf="aluno != null">
     <ion-card-content>
+      <ion-item>
+        <ion-label>{{ tipoTreino?.titulo }}</ion-label>
+        <ion-avatar slot="end">
+          <img [src]="tipoTreino?.icon">
+        </ion-avatar>
+      </ion-item>
+      <br />
       <ion-card-title>{{ aluno.nome }}</ion-card-title>
       <ion-label>
-        <p>Academia: {{ aluno.academia }}</p>
-        <p>E-mail: {{ aluno.email }}</p>
-        <p>Telefone: {{ aluno.telefone }}</p>
-        <p>Doenças crônicas: {{ aluno.doencas }}</p>
+        <p><strong>Academia:</strong> {{ aluno.academia }}</p>
+        <p><strong>E-mail:</strong> {{ aluno.email }}</p>
+        <p><strong>Telefone:</strong> {{ aluno.telefone }}</p>
+        <p><strong>Doenças crônicas:</strong> {{ aluno.doencas }}</p>
+        <p><strong>Objetivo:</strong> {{ aluno.objetivo }}</p>
+        <p><strong>Nível:</strong> {{ aluno.nivel }}</p>
       </ion-label>
     </ion-card-content>
     <ion-card-content>
       <ion-button
         (click)="onClickEdit()"
         *ngIf="aluno?.id != null && blockEdit == true"
-        color="secondary"
         [disabled]="!form.valid"
       >
         <ion-label color="light">Editar</ion-label>
@@ -104,6 +112,42 @@
             >
           </ion-select>
         </ion-item>
+        <br />
+        <ion-item [disabled]="blockEdit">
+          <ion-select
+            mode="md"
+            label="Objetivo do aluno"
+            labelPlacement="stacked"
+            formControlName="objetivo"
+            placeholder="Selecionar..."
+            cancelText="Cancelar"
+            okText="Confirmar"
+          >
+            <ion-select-option
+              *ngFor="let item of listObjetivos"
+              [value]="item.titulo"
+              >{{ item.titulo }}</ion-select-option
+            >
+          </ion-select>
+        </ion-item>
+        <br />
+        <ion-item [disabled]="blockEdit">
+          <ion-select
+            mode="md"
+            label="Nível do aluno"
+            labelPlacement="stacked"
+            formControlName="nivel"
+            placeholder="Selecionar..."
+            cancelText="Cancelar"
+            okText="Confirmar"
+          >
+            <ion-select-option
+              *ngFor="let item of listNiveis"
+              [value]="item.titulo"
+              >{{ item.titulo }}</ion-select-option
+            >
+          </ion-select>
+        </ion-item>
       </form>
     </ion-card-content>
     <ion-card-content>
@@ -111,7 +155,6 @@
         <ion-button
           *ngIf="blockEdit == false || !form.controls['id'].valid"
           (click)="onClickSave()"
-          color="secondary"
           [disabled]="!form.valid"
         >
           <ion-label color="light">Salvar</ion-label>
@@ -121,7 +164,7 @@
   </ion-card>
   <br />
   <ion-item-divider>
-    <ion-title color="secondary">FICHA DE TREINO</ion-title>
+    <ion-title color="primary">FICHA DE TREINO</ion-title>
   </ion-item-divider>
   <ion-list>
     <ion-accordion-group>
@@ -141,14 +184,12 @@
           <ion-row>
             <ion-button
               (click)="onClickEditarDiaTreino(item)"
-              color="secondary"
               shape="round"
             >
               <ion-label color="light">Ficha de treino</ion-label>
             </ion-button>
             <ion-button
               (click)="onClickRemoveDiaTreino(item)"
-              color="secondary"
               shape="round"
             >
               <ion-label color="light">Excluir</ion-label>
@@ -167,7 +208,7 @@
   <br />
   <app-animation-list *ngIf="listDiasTreino.length"></app-animation-list>
   <ion-fab *ngIf="aluno != null" slot="fixed" vertical="bottom" horizontal="end">
-    <ion-fab-button (click)="onClickCadastroDiaTreino()" color="secondary">
+    <ion-fab-button (click)="onClickCadastroDiaTreino()">
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>
   </ion-fab>

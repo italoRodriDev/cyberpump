@@ -1,7 +1,7 @@
 <ion-header mode="md">
-  <ion-toolbar color="primary">
+  <ion-toolbar color="secondary">
     <ion-buttons>
-      <img class="logo" src="assets/images/logo.svg" />
+      <img class="logo" src="assets/images/logo.png" />
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
@@ -11,11 +11,10 @@
   <section>
     <ion-segment
       (ionChange)="onChangeMenu($event)"
-      color="secondary"
       [value]="listMenu[0]?.nome"
     >
       <ion-segment-button *ngFor="let item of listMenu" [value]="item?.nome">
-        <ion-chip color="secondary"> {{ item?.nome }} </ion-chip>
+        <ion-chip color="primary"> {{ item?.nome }} </ion-chip>
       </ion-segment-button>
     </ion-segment>
   </section>
@@ -44,14 +43,12 @@
             <ion-row>
               <ion-button
                 (click)="onClickEdit(item)"
-                color="secondary"
                 shape="round"
               >
                 <ion-label color="light">Treino</ion-label>
               </ion-button>
               <ion-button
                 (click)="onClickRemove(item)"
-                color="secondary"
                 shape="round"
               >
                 <ion-label color="light">Excluir</ion-label>
@@ -71,7 +68,7 @@
   <br />
   <app-animation-list *ngIf="listAlunos.length"></app-animation-list>
   <ion-fab slot="fixed" vertical="bottom" horizontal="end">
-    <ion-fab-button (click)="onClickNew()" color="secondary">
+    <ion-fab-button (click)="onClickNew()">
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>
   </ion-fab>

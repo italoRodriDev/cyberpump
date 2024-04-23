@@ -1,5 +1,5 @@
 <ion-header mode="md">
-  <ion-toolbar color="primary">
+  <ion-toolbar color="secondary">
     <ion-buttons>
       <ion-button (click)="onClickBack()">
         <ion-icon slot="icon-only" name="arrow-back-outline"></ion-icon>
@@ -12,14 +12,16 @@
 <ion-content mode="md">
   <br />
   <ion-item-divider>
-    <ion-title color="secondary">DADOS</ion-title>
+    <ion-title color="primary">DADOS</ion-title>
   </ion-item-divider>
   <ion-card mode="ios" *ngIf="aluno != null && diaTreino != null">
     <ion-card-content>
       <ion-card-title>{{ diaTreino.dia }}</ion-card-title>
       <ion-label>
-        <p>Aluno: {{ aluno.nome }}</p>
-        <p>Doenças crônicas: {{ aluno.doencas }}</p>
+        <p><strong>Aluno:</strong> {{ aluno.nome }}</p>
+        <p><strong>Doenças crônicas:</strong> {{ aluno.doencas }}</p>
+        <p><strong>Objetivo:</strong> {{ aluno.objetivo }}</p>
+        <p><strong>Nível:</strong> {{ aluno.nivel }}</p>
       </ion-label>
     </ion-card-content>
     <ion-card-content *ngIf="exercicio != null">
@@ -35,7 +37,6 @@
       <ion-button
         (click)="onClickEdit()"
         *ngIf="aluno?.id != null && blockEdit == true"
-        color="secondary"
         [disabled]="!form.valid"
       >
         <ion-label color="light">Editar</ion-label>
@@ -114,7 +115,6 @@
         <ion-button
           *ngIf="blockEdit == false || !form.controls['id'].valid"
           (click)="onClickSave()"
-          color="secondary"
           [disabled]="!form.valid"
         >
           <ion-label color="light">Salvar</ion-label>

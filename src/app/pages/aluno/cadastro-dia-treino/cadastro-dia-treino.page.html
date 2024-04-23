@@ -1,5 +1,5 @@
 <ion-header mode="md">
-  <ion-toolbar color="primary">
+  <ion-toolbar color="secondary">
     <ion-buttons>
       <ion-button (click)="onClickBack()">
         <ion-icon slot="icon-only" name="arrow-back-outline"></ion-icon>
@@ -12,22 +12,21 @@
 <ion-content mode="md">
   <br />
   <ion-item-divider>
-    <ion-title color="secondary">DADOS</ion-title>
+    <ion-title color="primary">DADOS</ion-title>
   </ion-item-divider>
   <ion-card mode="ios" *ngIf="aluno != null && diaTreino != null">
     <ion-card-content>
-      <ion-card-title>{{ aluno.nome }}</ion-card-title>
+      <ion-card-title>{{ diaTreino.dia }}</ion-card-title>
       <ion-label>
-        <p>Dia: {{ diaTreino.dia }}</p>
-        <p>Ênfase: {{ diaTreino.enfase }}</p>
-        <p>Obs: {{ diaTreino.obs }}</p>
+        <p><strong>Aluno: {{ aluno.nome }}</strong> </p>
+        <p><strong>Ênfase:</strong> {{ diaTreino.enfase }}</p>
+        <p><strong>Observações:</strong> {{ diaTreino.obs }}</p>
       </ion-label>
     </ion-card-content>
     <ion-card-content>
       <ion-button
         (click)="onClickEdit()"
         *ngIf="aluno?.id != null && blockEdit == true"
-        color="secondary"
         [disabled]="!form.valid"
       >
         <ion-label color="light">Editar</ion-label>
@@ -86,7 +85,6 @@
         <ion-button
           *ngIf="blockEdit == false || !form.controls['id'].valid"
           (click)="onClickSave()"
-          color="secondary"
           [disabled]="!form.valid"
         >
           <ion-label color="light">Salvar</ion-label>
@@ -96,7 +94,7 @@
   </ion-card>
   <br />
   <ion-item-divider>
-    <ion-title color="secondary">FICHA DE TREINO</ion-title>
+    <ion-title color="primary">FICHA DE TREINO</ion-title>
   </ion-item-divider>
 
   <ion-list>
@@ -110,7 +108,7 @@
               >
               <br />
               <ion-label color="dark">Ênfase: {{ item?.enfase }}</ion-label>
-              <ion-label color="secondary"
+              <ion-label color="primary"
                 >{{ item?.series }} séries de {{ item?.repeticoes }}
                 repetições.</ion-label
               >
@@ -122,12 +120,11 @@
           <ion-row>
             <ion-button
               (click)="onClickEditarExercicio(item)"
-              color="secondary"
               shape="round"
             >
               <ion-label color="light">Editar</ion-label>
             </ion-button>
-            <ion-button color="secondary" shape="round">
+            <ion-button shape="round">
               <ion-label color="light">Excluir</ion-label>
             </ion-button>
           </ion-row>
@@ -144,7 +141,7 @@
   <br />
   <app-animation-list *ngIf="listExercicios.length"></app-animation-list>
   <ion-fab *ngIf="aluno != null && diaTreino != null" slot="fixed" vertical="bottom" horizontal="end">
-    <ion-fab-button (click)="onClickCadastroExercicio()" color="secondary">
+    <ion-fab-button (click)="onClickCadastroExercicio()">
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>
   </ion-fab>

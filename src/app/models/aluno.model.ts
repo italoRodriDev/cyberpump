@@ -5,4 +5,6 @@ export interface AlunoModel {
     academia: string;
     telefone: string;
     doencas: string;
+    objetivo: string;
+    nivel: string;
 }

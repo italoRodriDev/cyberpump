@@ -101,14 +101,14 @@ export class FormService {
   ];
 
   listDiasSemana: Array<any> = [
-    {nome: "Segunda"},
-    {nome: "Terça"},
-    {nome: "Quarta"},
-    {nome: "Quinta"},
-    {nome: "Sexta"},
-    {nome: "Sábado"},
-    {nome: "Domingo"}
-  ]
+    { nome: 'Segunda' },
+    { nome: 'Terça' },
+    { nome: 'Quarta' },
+    { nome: 'Quinta' },
+    { nome: 'Sexta' },
+    { nome: 'Sábado' },
+    { nome: 'Domingo' },
+  ];
 
   listSemana: Array<any> = [
     {
@@ -253,6 +253,37 @@ export class FormService {
       ergogênicos, essenciais para auxiliar na intensidade
       e recuperação da musculatura.`,
     },
+    {
+      id: 'Outro',
+      titulo: 'Treinos sem divisão',
+      icon: 'assets/svg/icon_treinos_abcdef.svg',
+      subtitulo: 'Treino não recomendado!',
+      descricao: `Treino não recomendado!`,
+    },
+  ];
+
+  listMusculosCostas: Array<any> = [
+    'Trapézio',
+    'Tríceps',
+    'Dorsais',
+    'Lombares',
+    'Isquiotibiais',
+    'Glúteos',
+    'Panturrilhas',
+    'Cardio',
+  ];
+
+  listMusculosFrente: Array<any> = [
+    'Ombros',
+    'Peitoral',
+    'Bíceps',
+    'Abdomen',
+    'Oblíquos',
+    'Antebraços',
+    'Abdutores',
+    'Adutores',
+    'Quadriceps',
+    'Cardio',
   ];
 
   listSlideTop: Array<any> = [
@@ -295,7 +326,9 @@ export class FormService {
     email: this.emailValidator,
     academia: this.reqValidator,
     telefone: this.phoneValidator,
-    doencas: this.reqValidator
+    doencas: this.reqValidator,
+    objetivo: this.reqValidator,
+    nivel: this.reqValidator,
   });
 
   formDiaTreino: FormGroup = this.fb.group({
@@ -303,7 +336,7 @@ export class FormService {
     idAluno: [],
     dia: this.reqValidator,
     enfase: this.reqValidator,
-    obs: this.reqValidator
+    obs: this.reqValidator,
   });
 
   formExercicio: FormGroup = this.fb.group({
@@ -314,7 +347,7 @@ export class FormService {
     enfase: this.reqValidator,
     series: this.reqValidator,
     repeticoes: this.reqValidator,
-    obs: this.reqValidator
+    obs: this.reqValidator,
   });
 
   constructor(private fb: FormBuilder) {
