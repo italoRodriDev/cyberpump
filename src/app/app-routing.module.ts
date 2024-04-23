@@ -27,10 +27,6 @@ const routes: Routes = [
     path: 'cadastro-exercicios',
     loadChildren: () => import('./pages/aluno/cadastro-exercicios/cadastro-exercicios.module').then( m => m.CadastroExerciciosPageModule)
   },
-  {
-    path: 'exercicios-aluno',
-    loadChildren: () => import('./pages/aluno/exercicios-aluno/exercicios-aluno.module').then( m => m.ExerciciosAlunoPageModule)
-  },
 ];
 
 @NgModule({

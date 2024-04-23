@@ -4,7 +4,7 @@
       <ion-button (click)="onClickBack()">
         <ion-icon slot="icon-only" name="arrow-back-outline"></ion-icon>
       </ion-button>
-      <ion-title>Cadastro de dia</ion-title>
+      <ion-title></ion-title>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
@@ -12,28 +12,133 @@
 <ion-content mode="md">
   <br />
   <ion-item-divider>
-    <ion-title color="secondary">DADOS DO DIA DE TREINO</ion-title>
+    <ion-title color="secondary">DADOS</ion-title>
   </ion-item-divider>
-  <ion-card mode="ios">
+  <ion-card mode="ios" *ngIf="diaTreino != null">
     <ion-card-content>
-      <form>
-        <ion-item>
-          <ion-input placeholder="Digite o nome do aluno(a)"></ion-input>
-        </ion-item>
-        <br />
-        <ion-item>
-          <ion-input placeholder="Ênfase"></ion-input>
-        </ion-item>
-        <ion-item>
-          <ion-input placeholder="Observações"></ion-input>
-        </ion-item>
-      </form>
+      <ion-card-title>{{ aluno?.nome }}</ion-card-title>
+      <ion-label>
+        <p>Dia: {{ diaTreino?.dia }}</p>
+        <p>Ênfase: {{ diaTreino?.enfase }}</p>
+        <p>Obs: {{ diaTreino?.obs }}</p>
+      </ion-label>
     </ion-card-content>
     <ion-card-content>
-      <ion-button color="secondary">
-        <ion-label color="light">Salvar</ion-label>
+      <ion-button
+        (click)="onClickEdit()"
+        *ngIf="aluno?.id != null && blockEdit == true"
+        color="secondary"
+        [disabled]="!form.valid"
+      >
+        <ion-label color="light">Editar</ion-label>
       </ion-button>
     </ion-card-content>
   </ion-card>
-</ion-content>
+  <ion-card mode="ios" *ngIf="diaTreino == null || blockEdit == false">
+    <ion-card-content>
+      <form [formGroup]="form">
+        <ion-item [disabled]="blockEdit">
+          <ion-select
+            formControlName="dia"
+            mode="md"
+            label="Dia do treino"
+            placeholder="Selecionar"
+            cancelText="Cancelar"
+            okText="Confirmar"
+          >
+            <ion-select-option *ngFor="let item of listDiaTreino"
+              >{{ item?.nome }}</ion-select-option
+            >
+          </ion-select>
+        </ion-item>
+        <br />
+        <ion-item [disabled]="blockEdit">
+          <ion-select
+            formControlName="enfase"
+            mode="md"
+            label="Ênfase"
+            placeholder="Selecionar"
+            multiple="true"
+            cancelText="Cancelar"
+            okText="Confirmar"
+          >
+            <ion-select-option *ngFor="let item of listEnfase"
+              >{{ item?.titulo }}</ion-select-option
+            >
+          </ion-select>
+        </ion-item>
+        <br />
+        <ion-item [disabled]="blockEdit">
+          <ion-textarea
+            formControlName="obs"
+            label="Observações"
+            labelPlacement="stacked"
+            placeholder="Opcional..."
+            minlength="0"
+            maxlength="500"
+          ></ion-textarea>
+        </ion-item>
+        <br />
+      </form>
+    </ion-card-content>
+    <ion-card-content>
+      <ion-row>
+        <ion-button
+          *ngIf="blockEdit == false || !form.controls['id'].valid"
+          (click)="onClickSave()"
+          color="secondary"
+          [disabled]="!form.valid"
+        >
+          <ion-label color="light">Salvar</ion-label>
+        </ion-button>
+      </ion-row>
+    </ion-card-content>
+  </ion-card>
+  <br />
+  <ion-item-divider>
+    <ion-title color="secondary">FICHA DE TREINO</ion-title>
+  </ion-item-divider>
 
+  <ion-list>
+    <ion-accordion-group>
+      <ion-accordion *ngFor="let item of listExercicios">
+        <ion-item slot="header">
+          <ion-label>
+            <p>
+              <ion-title color="dark" style="padding-left: 0"
+                >{{ item?.nome }}</ion-title
+              >
+              <br />
+              <ion-label color="dark">Ênfase: {{ item?.enfase }}</ion-label>
+              <ion-label color="secondary"
+                >{{ item?.series }} séries de {{ item?.repeticoes }}
+                repetições.</ion-label
+              >
+              <ion-label>Ênfase: {{ item?.obs }}</ion-label>
+            </p>
+          </ion-label>
+        </ion-item>
+        <ion-item slot="content">
+          <ion-row>
+            <ion-button
+              (click)="onClickEditarExercicio(item)"
+              color="secondary"
+              shape="round"
+            >
+              <ion-label color="light">Editar</ion-label>
+            </ion-button>
+            <ion-button color="secondary" shape="round">
+              <ion-label color="light">Excluir</ion-label>
+            </ion-button>
+          </ion-row>
+        </ion-item>
+      </ion-accordion>
+    </ion-accordion-group>
+  </ion-list>
+
+  <ion-fab slot="fixed" vertical="bottom" horizontal="end">
+    <ion-fab-button (click)="onClickCadastroExercicio()" color="secondary">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>

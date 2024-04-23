@@ -4,48 +4,104 @@
       <ion-button (click)="onClickBack()">
         <ion-icon slot="icon-only" name="arrow-back-outline"></ion-icon>
       </ion-button>
-      <ion-title>Cadastro do aluno</ion-title>
+      <ion-title></ion-title>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content mode="md">
   <br />
+  <ion-title>{{ (aluno != null ? aluno?.nome :  '') }}</ion-title>
+  <br />
   <ion-item-divider>
-    <ion-title color="secondary">ALUNOS</ion-title>
+    <ion-title color="secondary">DADOS DO TREINO</ion-title>
   </ion-item-divider>
   <ion-card mode="ios">
     <ion-card-content>
-      <form>
-        <ion-item>
-          <ion-input placeholder="Digite o nome do exercício"></ion-input>
+      <form [formGroup]="form">
+        <ion-item [disabled]="blockEdit">
+          <ion-input
+            formControlName="nome"
+            label="Nome do exercicio"
+            labelPlacement="stacked"
+            placeholder="Digite o nome"
+            minlength="3"
+            maxlength="100"
+          ></ion-input>
         </ion-item>
         <br />
-        <ion-item>
-          <ion-select label="Ênfase" placeholder="Selecionar">
-            <ion-select-option>Peito</ion-select-option>
-            <ion-select-option>Ombros</ion-select-option>
+        <ion-item [disabled]="blockEdit">
+          <ion-select
+            formControlName="enfase"
+            mode="md"
+            label="Ênfase"
+            placeholder="Selecionar"
+            multiple="true"
+            cancelText="Cancelar"
+            okText="Confirmar"
+          >
+            <ion-select-option *ngFor="let item of listEnfase"
+              >{{ item?.titulo }}</ion-select-option
+            >
           </ion-select>
         </ion-item>
         <br />
-        <ion-item>
-          <ion-input placeholder="Digite o número de séries"></ion-input>
+        <ion-item [disabled]="blockEdit">
+          <ion-input
+            formControlName="series"
+            label="Número de séries"
+            labelPlacement="stacked"
+            type="number"
+            placeholder="00"
+            minlength="0"
+            maxlength="500"
+          ></ion-input>
         </ion-item>
         <br />
-        <ion-item>
-          <ion-input placeholder="Digite o número de repetições"></ion-input>
+        <ion-item [disabled]="blockEdit">
+          <ion-input
+            formControlName="repeticoes"
+            label="Número de repetições"
+            labelPlacement="stacked"
+            type="number"
+            placeholder="00"
+            minlength="0"
+            maxlength="500"
+          ></ion-input>
         </ion-item>
         <br />
-        <ion-item>
-          <ion-input placeholder="Observações (Opcional)"></ion-input>
+        <ion-item [disabled]="blockEdit">
+          <ion-textarea
+            formControlName="obs"
+            label="Observações"
+            labelPlacement="stacked"
+            placeholder="Opcional..."
+            minlength="0"
+            maxlength="500"
+          ></ion-textarea>
         </ion-item>
         <br />
       </form>
     </ion-card-content>
     <ion-card-content>
-      <ion-button color="secondary">
-        <ion-label color="light">Cadastrar</ion-label>
-      </ion-button>
+      <ion-row>
+        <ion-button
+          (click)="onClickEdit()"
+          *ngIf="aluno?.id != null && blockEdit == true"
+          color="secondary"
+          [disabled]="!form.valid"
+        >
+          <ion-label color="light">Editar</ion-label>
+        </ion-button>
+        <ion-button
+          *ngIf="blockEdit == false || !form.controls['id'].valid"
+          (click)="onClickSave()"
+          color="secondary"
+          [disabled]="!form.valid"
+        >
+          <ion-label color="light">Salvar</ion-label>
+        </ion-button>
+      </ion-row>
     </ion-card-content>
   </ion-card>
 </ion-content>

@@ -7,6 +7,7 @@ import { AlertController, NavController } from '@ionic/angular';
 import { BehaviorSubject } from 'rxjs';
 import { FormGroup } from '@angular/forms';
 import { AlunoModel } from 'src/app/models/aluno.model';
+import { DiaTreinoModel } from 'src/app/models/dia-treino.model';
 
 @Injectable({
   providedIn: 'root'
@@ -19,10 +20,8 @@ export class CadastroDiaTreinoService {
   public bsDiasTreino = new BehaviorSubject<Array<any>>([]);
   listDiasTreino = this.bsDiasTreino.asObservable();
 
-  public bsDiaTreino = new BehaviorSubject<AlunoModel | undefined>(undefined);
+  public bsDiaTreino = new BehaviorSubject<DiaTreinoModel | undefined>(undefined);
   diaTreino = this.bsDiaTreino.asObservable();
-  public bsAluno = new BehaviorSubject<AlunoModel | undefined>(undefined);
-  aluno = this.bsAluno.asObservable();
 
   constructor(
     private fireDatabase: AngularFireDatabase,
@@ -41,12 +40,11 @@ export class CadastroDiaTreinoService {
     });
   }
 
-  getData() {
-    const idAluno = this.bsAluno.value!.id;
+  getData(aluno: AlunoModel) {
     this.db
       .ref('DiasTreino')
       .child('ID_PROFESSOR')
-      .child(idAluno)
+      .child(aluno.id)
       .on('value', (snapshot) => {
         const data = snapshot.val();
         if (data) {
@@ -57,27 +55,27 @@ export class CadastroDiaTreinoService {
       });
   }
 
-  validFormData() {
+  validFormData(aluno: AlunoModel) {
     const currentID = this.formDiaTreino.controls['id'].value;
     if (this.formDiaTreino.valid) {
       if (currentID != null) {
-        this.saveData(currentID);
+        this.saveData(currentID, aluno);
       } else {
         const id = this.fireDatabase.createPushId();
         this.formDiaTreino.patchValue({
           id: id,
+          idAluno: aluno.id,
         });
-        this.saveData(id);
+        this.saveData(id, aluno);
       }
     }
   }
 
-  saveData(id: string) {
-    const idAluno = this.bsAluno.value!.id;
+  saveData(id: string, aluno: AlunoModel) {
     this.db
       .ref('DiasTreino')
       .child('ID_PROFESSOR')
-      .child(idAluno)
+      .child(aluno.id)
       .child(id)
       .update(this.formDiaTreino.value)
       .then((value) => {
@@ -93,10 +91,10 @@ export class CadastroDiaTreinoService {
       });
   }
 
-  async showAlertRemove(data: AlunoModel) {
+  async showAlertRemove(data: DiaTreinoModel, aluno: AlunoModel) {
     const alert = await  this.alertCtrl.create({
       header: 'Deseja excluir?',
-      subHeader: data.nome,
+      subHeader: data.dia,
       message: 'Ao confirmar será excluído.',
       buttons: [
         {
@@ -106,7 +104,7 @@ export class CadastroDiaTreinoService {
         {
           text: 'Excluir',
           handler: () => {
-            this.remove(data?.id);
+            this.remove(data?.id, aluno);
           }
         },
       ]
@@ -115,13 +113,12 @@ export class CadastroDiaTreinoService {
     
   }
 
-  remove(id: string) {
-    const idAluno = this.bsAluno.value!.id;
+  remove(id: string, aluno: AlunoModel) {
 
     this.db
       .ref('DiasTreino')
       .child('ID_PROFESSOR')
-      .child(idAluno)
+      .child(aluno.id)
       .child(id)
       .remove()
       .then((value) => {

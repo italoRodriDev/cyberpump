@@ -7,6 +7,8 @@ import { AlunoModel } from 'src/app/models/aluno.model';
 import { FormService } from '../forms/form.service';
 import { AlertsService } from '../alerts/alerts.service';
 import { AlertController, NavController } from '@ionic/angular';
+import { ExercicioModel } from 'src/app/models/exercicio.model';
+import { DiaTreinoModel } from 'src/app/models/dia-treino.model';
 
 @Injectable({
   providedIn: 'root'
@@ -19,10 +21,8 @@ export class CadastroExerciciosService {
   public bsExercicios = new BehaviorSubject<Array<any>>([]);
   listExercicios = this.bsExercicios.asObservable();
 
-  public bsAluno = new BehaviorSubject<AlunoModel | undefined>(undefined);
-  aluno = this.bsAluno.asObservable();
-  public bsDiaTreino = new BehaviorSubject<AlunoModel | undefined>(undefined);
-  diaTreino = this.bsDiaTreino.asObservable();
+  public bsExercicio = new BehaviorSubject<ExercicioModel | undefined>(undefined);
+  exercicio = this.bsExercicio.asObservable();
 
   constructor(
     private fireDatabase: AngularFireDatabase,
@@ -41,12 +41,12 @@ export class CadastroExerciciosService {
     });
   }
 
-  getData() {
-    const idAluno = this.bsAluno.value!.id;
+  getData(aluno: AlunoModel, diaTreino: DiaTreinoModel) {
     this.db
       .ref('Exercicios')
       .child('ID_PROFESSOR')
-      .child(idAluno)
+      .child(aluno.id)
+      .child(diaTreino.id)
       .on('value', (snapshot) => {
         const data = snapshot.val();
         if (data) {
@@ -57,27 +57,29 @@ export class CadastroExerciciosService {
       });
   }
 
-  validFormData() {
+  validFormData(aluno: AlunoModel, diaTreino: DiaTreinoModel) {
     const currentID = this.formExercicio.controls['id'].value;
     if (this.formExercicio.valid) {
       if (currentID != null) {
-        this.saveData(currentID);
+        this.saveData(currentID, aluno, diaTreino);
       } else {
         const id = this.fireDatabase.createPushId();
         this.formExercicio.patchValue({
           id: id,
+          idAluno: aluno.id,
+          idDiaTreino: diaTreino.id
         });
-        this.saveData(id);
+        this.saveData(id, aluno, diaTreino);
       }
     }
   }
 
-  saveData(id: string) {
-    const idAluno = this.bsAluno.value!.id;
+  saveData(id: string, aluno: AlunoModel, diaTreino: DiaTreinoModel) {
     this.db
       .ref('Exercicios')
       .child('ID_PROFESSOR')
-      .child(idAluno)
+      .child(aluno.id)
+      .child(diaTreino.id)
       .child(id)
       .update(this.formExercicio.value)
       .then((value) => {
@@ -93,10 +95,10 @@ export class CadastroExerciciosService {
       });
   }
 
-  async showAlertRemove(data: AlunoModel) {
+  async showAlertRemove(aluno: AlunoModel, diaTreino: DiaTreinoModel, exercicio: ExercicioModel) {
     const alert = await  this.alertCtrl.create({
       header: 'Deseja excluir?',
-      subHeader: data.nome,
+      subHeader: exercicio.nome,
       message: 'Ao confirmar será excluído.',
       buttons: [
         {
@@ -106,7 +108,7 @@ export class CadastroExerciciosService {
         {
           text: 'Excluir',
           handler: () => {
-            this.remove(data?.id);
+            this.remove(aluno, diaTreino, exercicio);
           }
         },
       ]
@@ -115,14 +117,14 @@ export class CadastroExerciciosService {
     
   }
 
-  remove(id: string) {
-    const idAluno = this.bsAluno.value!.id;
+  remove(aluno: AlunoModel, diaTreino: DiaTreinoModel, exercicio: ExercicioModel) {
 
     this.db
       .ref('Exercicios')
       .child('ID_PROFESSOR')
-      .child(idAluno)
-      .child(id)
+      .child(aluno.id)
+      .child(diaTreino.id)
+      .child(exercicio.id)
       .remove()
       .then((value) => {
         this.alertService.showToast('Excludo com sucesso!');

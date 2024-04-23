@@ -2,7 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { NavController } from '@ionic/angular';
 import { AlunoModel } from 'src/app/models/aluno.model';
+import { DiaTreinoModel } from 'src/app/models/dia-treino.model';
 import { CadastroAlunoService } from 'src/app/services/aluno/cadastro-aluno.service';
+import { CadastroDiaTreinoService } from 'src/app/services/aluno/cadastro-dia-treino.service';
 import { FormService } from 'src/app/services/forms/form.service';
 
 @Component({
@@ -15,14 +17,18 @@ export class CadastroAlunoPage implements OnInit {
   aluno: AlunoModel | undefined;
   listDoencasCronicas: Array<any> = this.formService.listDoencasCronicas;
   blockEdit: boolean = false;
+  listDiasTreino: Array<DiaTreinoModel> = [];
 
   constructor(
     private formService: FormService,
     private navCtrl: NavController,
-    private cadastroAlunoService: CadastroAlunoService
+    private cadastroAlunoService: CadastroAlunoService,
+    private cadastroDiasTreinoService: CadastroDiaTreinoService
   ) {}
 
-  ngOnInit() {
+  ngOnInit() {}
+
+  ionViewDidEnter() {
     this.getDataService();
   }
 
@@ -32,6 +38,11 @@ export class CadastroAlunoPage implements OnInit {
       if (data) {
         this.aluno = data;
         this.setDataForm();
+
+        this.cadastroDiasTreinoService.getData(data);
+        this.cadastroDiasTreinoService.listDiasTreino.subscribe((list) => {
+          this.listDiasTreino = list;
+        });
       } else {
         this.blockEdit = false;
       }
@@ -47,12 +58,18 @@ export class CadastroAlunoPage implements OnInit {
     this.cadastroAlunoService.validFormData();
   }
 
-  onClickCadastroDiaTreino() {
+  onClickEditarDiaTreino(data: DiaTreinoModel) {
+    this.cadastroDiasTreinoService.bsDiaTreino.next(data);
     this.navCtrl.navigateBack('cadastro-dia-treino');
   }
 
-  onClickExercicios() {
-    this.navCtrl.navigateBack('exercicios-aluno');
+  onClickRemoveDiaTreino(data: DiaTreinoModel) {
+    this.cadastroDiasTreinoService.showAlertRemove(data, this.aluno!);
+  }
+
+  onClickCadastroDiaTreino() {
+    this.cadastroDiasTreinoService.bsDiaTreino.next(undefined);
+    this.navCtrl.navigateBack('cadastro-dia-treino');
   }
 
   onClickEdit() {
@@ -60,6 +77,6 @@ export class CadastroAlunoPage implements OnInit {
   }
 
   onClickBack() {
-    this.navCtrl.navigateBack('home');
+    this.navCtrl.back();
   }
 }

@@ -100,6 +100,16 @@ export class FormService {
     { id: 8, titulo: 'Obesidade', isChecked: false },
   ];
 
+  listDiasSemana: Array<any> = [
+    {nome: "Segunda"},
+    {nome: "Terça"},
+    {nome: "Quarta"},
+    {nome: "Quinta"},
+    {nome: "Sexta"},
+    {nome: "Sábado"},
+    {nome: "Domingo"}
+  ]
+
   listSemana: Array<any> = [
     {
       id: 'Treinos AB',

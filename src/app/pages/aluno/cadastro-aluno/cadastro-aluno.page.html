@@ -4,7 +4,7 @@
       <ion-button (click)="onClickBack()">
         <ion-icon slot="icon-only" name="arrow-back-outline"></ion-icon>
       </ion-button>
-      <ion-title>Aluno</ion-title>
+      <ion-title></ion-title>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
@@ -12,9 +12,30 @@
 <ion-content mode="md">
   <br />
   <ion-item-divider>
-    <ion-title color="secondary">DADOS</ion-title>
+    <ion-title color="secondary">DADOS DO ALUNO</ion-title>
   </ion-item-divider>
-  <ion-card mode="ios">
+  <ion-card mode="ios" *ngIf="aluno != null">
+    <ion-card-content>
+      <ion-card-title>{{ aluno?.nome }}</ion-card-title>
+      <ion-label>
+        <p>Academia: {{ aluno?.academia }}</p>
+        <p>E-mail: {{ aluno?.email }}</p>
+        <p>Telefone: {{ aluno?.telefone }}</p>
+        <p>Doenças crônicas: {{ aluno?.doencas }}</p>
+      </ion-label>
+    </ion-card-content>
+    <ion-card-content>
+      <ion-button
+        (click)="onClickEdit()"
+        *ngIf="aluno?.id != null && blockEdit == true"
+        color="secondary"
+        [disabled]="!form.valid"
+      >
+        <ion-label color="light">Editar</ion-label>
+      </ion-button>
+    </ion-card-content>
+  </ion-card>
+  <ion-card mode="ios" *ngIf="aluno?.id == null || blockEdit == false">
     <ion-card-content>
       <form [formGroup]="form">
         <ion-item [disabled]="blockEdit">
@@ -88,14 +109,6 @@
     <ion-card-content>
       <ion-row>
         <ion-button
-          (click)="onClickEdit()"
-          *ngIf="aluno?.id != null && blockEdit == true"
-          color="secondary"
-          [disabled]="!form.valid"
-        >
-          <ion-label color="light">Editar</ion-label>
-        </ion-button>
-        <ion-button
           *ngIf="blockEdit == false || !form.controls['id'].valid"
           (click)="onClickSave()"
           color="secondary"
@@ -112,28 +125,28 @@
   </ion-item-divider>
   <ion-list>
     <ion-accordion-group>
-      <ion-accordion>
+      <ion-accordion *ngFor="let item of listDiasTreino">
         <ion-item slot="header">
           <ion-label>
             <p>
               <ion-title color="dark" style="padding-left: 0"
-                >Segunda</ion-title
+                >{{ item?.dia }}</ion-title
               >
               <br />
-              <ion-label>Ênfase: Peito, Ombros</ion-label>
+              <ion-label>Ênfase: {{ item?.enfase }}</ion-label>
             </p>
           </ion-label>
         </ion-item>
         <ion-item slot="content">
           <ion-row>
             <ion-button
-              (click)="onClickExercicios()"
+              (click)="onClickEditarDiaTreino(item)"
               color="secondary"
               shape="round"
             >
-              <ion-label color="light">Exercícios</ion-label>
+              <ion-label color="light">Informações</ion-label>
             </ion-button>
-            <ion-button color="secondary" shape="round">
+            <ion-button (click)="onClickRemoveDiaTreino(item)" color="secondary" shape="round">
               <ion-label color="light">Excluir</ion-label>
             </ion-button>
           </ion-row>
@@ -142,7 +155,7 @@
     </ion-accordion-group>
   </ion-list>
   <ion-fab slot="fixed" vertical="bottom" horizontal="end">
-    <ion-fab-button (click)="onClickExercicios()" color="secondary">
+    <ion-fab-button (click)="onClickCadastroDiaTreino()" color="secondary">
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>
   </ion-fab>
