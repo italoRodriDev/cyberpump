@@ -12,7 +12,7 @@
 <ion-content mode="md">
   <br />
   <ion-item-divider>
-    <ion-title color="secondary">DADOS DO ALUNO</ion-title>
+    <ion-title color="secondary">DADOS</ion-title>
   </ion-item-divider>
   <ion-card mode="ios" *ngIf="aluno != null">
     <ion-card-content>
@@ -144,7 +144,7 @@
               color="secondary"
               shape="round"
             >
-              <ion-label color="light">Informações</ion-label>
+              <ion-label color="light">Ficha de treino</ion-label>
             </ion-button>
             <ion-button
               (click)="onClickRemoveDiaTreino(item)"
@@ -166,7 +166,7 @@
   <br />
   <br />
   <app-animation-list *ngIf="listDiasTreino.length"></app-animation-list>
-  <ion-fab slot="fixed" vertical="bottom" horizontal="end">
+  <ion-fab *ngIf="aluno != null" slot="fixed" vertical="bottom" horizontal="end">
     <ion-fab-button (click)="onClickCadastroDiaTreino()" color="secondary">
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>

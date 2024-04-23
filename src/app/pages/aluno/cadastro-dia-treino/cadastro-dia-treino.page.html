@@ -143,7 +143,7 @@
   <br />
   <br />
   <app-animation-list *ngIf="listExercicios.length"></app-animation-list>
-  <ion-fab slot="fixed" vertical="bottom" horizontal="end">
+  <ion-fab *ngIf="aluno != null && diaTreino != null" slot="fixed" vertical="bottom" horizontal="end">
     <ion-fab-button (click)="onClickCadastroExercicio()" color="secondary">
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>

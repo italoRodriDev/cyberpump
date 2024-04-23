@@ -16,17 +16,15 @@
   </ion-item-divider>
   <ion-card mode="ios" *ngIf="aluno != null && diaTreino != null">
     <ion-card-content>
-      <ion-card-title>{{ aluno.nome }}</ion-card-title>
+      <ion-card-title>{{ diaTreino.dia }}</ion-card-title>
       <ion-label>
-        <p>Dia: {{ diaTreino.dia }}</p>
-        <p>Ênfase: {{ diaTreino.enfase }}</p>
-        <p>Obs: {{ diaTreino.obs }}</p>
+        <p>Aluno: {{ aluno.nome }}</p>
+        <p>Doenças crônicas: {{ aluno.doencas }}</p>
       </ion-label>
     </ion-card-content>
     <ion-card-content *ngIf="exercicio != null">
-      <ion-card-title>Treino atual</ion-card-title>
+      <ion-card-title>{{ exercicio.nome }}</ion-card-title>
       <ion-label>
-        <p>Nome: {{ exercicio.nome }}</p>
         <p>Ênfase: {{ exercicio.enfase }}</p>
         <p>Séries: {{ exercicio.series }}</p>
         <p>Repetições: {{ exercicio.repeticoes }}</p>
