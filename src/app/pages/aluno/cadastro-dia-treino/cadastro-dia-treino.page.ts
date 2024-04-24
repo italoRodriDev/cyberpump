@@ -81,6 +81,10 @@ export class CadastroDiaTreinoPage implements OnInit {
     this.navCtrl.navigateBack('cadastro-exercicios');
   }
 
+  onClickExcluirExercicio(data: ExercicioModel) {
+    this.cadastroExercicioService.showAlertRemove(this.aluno!, this.diaTreino!, data);
+  }
+
   onClickEdit() {
     this.blockEdit = !this.blockEdit;
   }

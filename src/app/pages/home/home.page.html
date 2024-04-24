@@ -7,18 +7,7 @@
 </ion-header>
 
 <ion-content>
-  <br />
   <section>
-    <ion-segment
-      (ionChange)="onChangeMenu($event)"
-      [value]="listMenu[0]?.nome"
-    >
-      <ion-segment-button *ngFor="let item of listMenu" [value]="item?.nome">
-        <ion-chip color="primary"> {{ item?.nome }} </ion-chip>
-      </ion-segment-button>
-    </ion-segment>
-  </section>
-  <section *ngIf="pageMenu == 'ALUNOS'">
     <br />
     <ion-item-divider>
       <ion-title color="dark">Alunos</ion-title>
@@ -40,20 +29,12 @@
             </ion-label>
           </ion-item>
           <ion-item slot="content">
-            <ion-row>
-              <ion-button
-                (click)="onClickEdit(item)"
-                shape="round"
-              >
-                <ion-label color="light">Treino</ion-label>
-              </ion-button>
-              <ion-button
-                (click)="onClickRemove(item)"
-                shape="round"
-              >
-                <ion-label color="light">Excluir</ion-label>
-              </ion-button>
-            </ion-row>
+            <ion-button slot="start" (click)="onClickEdit(item)" shape="round">
+              <ion-label color="light">Gerenciar treino</ion-label>
+            </ion-button>
+            <ion-button slot="end" (click)="onClickRemove(item)" shape="round">
+              <ion-label color="light">Excluir</ion-label>
+            </ion-button>
           </ion-item>
         </ion-accordion>
       </ion-accordion-group>
@@ -67,7 +48,11 @@
   <br />
   <br />
   <app-animation-list *ngIf="listAlunos.length"></app-animation-list>
-  <ion-fab slot="fixed" vertical="bottom" horizontal="end">
+  <ion-fab
+    slot="fixed"
+    vertical="bottom"
+    horizontal="end"
+  >
     <ion-fab-button (click)="onClickNew()">
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>

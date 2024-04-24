@@ -19,7 +19,7 @@
       <ion-item>
         <ion-label>{{ tipoTreino?.titulo }}</ion-label>
         <ion-avatar slot="end">
-          <img [src]="tipoTreino?.icon">
+          <img [src]="tipoTreino?.icon" />
         </ion-avatar>
       </ion-item>
       <br />
@@ -164,7 +164,7 @@
   </ion-card>
   <br />
   <ion-item-divider>
-    <ion-title color="primary">FICHA DE TREINO</ion-title>
+    <ion-title color="primary">DIAS DE TREINO</ion-title>
   </ion-item-divider>
   <ion-list>
     <ion-accordion-group>
@@ -181,20 +181,20 @@
           </ion-label>
         </ion-item>
         <ion-item slot="content">
-          <ion-row>
-            <ion-button
-              (click)="onClickEditarDiaTreino(item)"
-              shape="round"
-            >
-              <ion-label color="light">Ficha de treino</ion-label>
-            </ion-button>
-            <ion-button
-              (click)="onClickRemoveDiaTreino(item)"
-              shape="round"
-            >
-              <ion-label color="light">Excluir</ion-label>
-            </ion-button>
-          </ion-row>
+          <ion-button
+            slot="start"
+            (click)="onClickEditarDiaTreino(item)"
+            shape="round"
+          >
+            <ion-label color="light">Ver exercícios</ion-label>
+          </ion-button>
+          <ion-button
+            slot="end"
+            (click)="onClickRemoveDiaTreino(item)"
+            shape="round"
+          >
+            <ion-label color="light">Excluir</ion-label>
+          </ion-button>
         </ion-item>
       </ion-accordion>
     </ion-accordion-group>
@@ -207,7 +207,12 @@
   <br />
   <br />
   <app-animation-list *ngIf="listDiasTreino.length"></app-animation-list>
-  <ion-fab *ngIf="aluno != null" slot="fixed" vertical="bottom" horizontal="end">
+  <ion-fab
+    *ngIf="aluno != null"
+    slot="fixed"
+    vertical="bottom"
+    horizontal="end"
+  >
     <ion-fab-button (click)="onClickCadastroDiaTreino()">
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>

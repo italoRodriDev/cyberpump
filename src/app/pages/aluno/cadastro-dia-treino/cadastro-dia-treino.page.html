@@ -18,7 +18,7 @@
     <ion-card-content>
       <ion-card-title>{{ diaTreino.dia }}</ion-card-title>
       <ion-label>
-        <p><strong>Aluno: {{ aluno.nome }}</strong> </p>
+        <p><strong>Aluno: {{ aluno.nome }}</strong></p>
         <p><strong>Ênfase:</strong> {{ diaTreino.enfase }}</p>
         <p><strong>Observações:</strong> {{ diaTreino.obs }}</p>
       </ion-label>
@@ -94,7 +94,7 @@
   </ion-card>
   <br />
   <ion-item-divider>
-    <ion-title color="primary">FICHA DE TREINO</ion-title>
+    <ion-title color="primary">EXERCÍCIOS</ion-title>
   </ion-item-divider>
 
   <ion-list>
@@ -117,17 +117,20 @@
           </ion-label>
         </ion-item>
         <ion-item slot="content">
-          <ion-row>
-            <ion-button
-              (click)="onClickEditarExercicio(item)"
-              shape="round"
-            >
-              <ion-label color="light">Editar</ion-label>
-            </ion-button>
-            <ion-button shape="round">
-              <ion-label color="light">Excluir</ion-label>
-            </ion-button>
-          </ion-row>
+          <ion-button
+            slot="start"
+            (click)="onClickEditarExercicio(item)"
+            shape="round"
+          >
+            <ion-label color="light">Gerenciar exercícios</ion-label>
+          </ion-button>
+          <ion-button
+            slot="end"
+            (click)="onClickExcluirExercicio(item)"
+            shape="round"
+          >
+            <ion-label color="light">Excluir</ion-label>
+          </ion-button>
         </ion-item>
       </ion-accordion>
     </ion-accordion-group>
@@ -140,7 +143,12 @@
   <br />
   <br />
   <app-animation-list *ngIf="listExercicios.length"></app-animation-list>
-  <ion-fab *ngIf="aluno != null && diaTreino != null" slot="fixed" vertical="bottom" horizontal="end">
+  <ion-fab
+    *ngIf="aluno != null && diaTreino != null"
+    slot="fixed"
+    vertical="bottom"
+    horizontal="end"
+  >
     <ion-fab-button (click)="onClickCadastroExercicio()">
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>

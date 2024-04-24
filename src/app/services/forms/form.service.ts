@@ -262,28 +262,26 @@ export class FormService {
     },
   ];
 
-  listMusculosCostas: Array<any> = [
-    'Trapézio',
-    'Tríceps',
-    'Dorsais',
-    'Lombares',
-    'Isquiotibiais',
-    'Glúteos',
-    'Panturrilhas',
-    'Cardio',
-  ];
-
-  listMusculosFrente: Array<any> = [
-    'Ombros',
-    'Peitoral',
-    'Bíceps',
-    'Abdomen',
-    'Oblíquos',
-    'Antebraços',
-    'Abdutores',
-    'Adutores',
-    'Quadriceps',
-    'Cardio',
+  listEnfaseMusculos: Array<any> = [
+    // COSTAS E INFERIORES
+    { titulo: 'Cardio' },
+    { titulo: 'Trapézio' },
+    { titulo: 'Tríceps' },
+    { titulo: 'Dorsais' },
+    { titulo: 'Lombares' },
+    { titulo: 'Isquiotibiais' },
+    { titulo: 'Glúteos' },
+    { titulo: 'Panturrilhas' },
+    // FRENTE E SUPERIORES
+    { titulo: 'Ombros' },
+    { titulo: 'Peitoral' },
+    { titulo: 'Bíceps' },
+    { titulo: 'Abdomen' },
+    { titulo: 'Oblíquos' },
+    { titulo: 'Antebraços' },
+    { titulo: 'Abdutores' },
+    { titulo: 'Adutores' },
+    { titulo: 'Quadriceps' },
   ];
 
   listSlideTop: Array<any> = [

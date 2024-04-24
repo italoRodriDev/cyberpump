@@ -11,11 +11,6 @@ import { CadastroAlunoService } from 'src/app/services/aluno/cadastro-aluno.serv
 export class HomePage implements OnInit {
 
   listAlunos: Array<AlunoModel> = [];
-  pageMenu = 'ALUNOS'
-  listMenu: Array<any> = [
-    {nome: 'ALUNOS'},
-    {nome: 'NUTRICIONISTAS'}
-  ];
   
   constructor(
     private navCtrl: NavController,
@@ -29,13 +24,6 @@ export class HomePage implements OnInit {
     this.cadastroAlunoService.listAlunos.subscribe((list) => {
       this.listAlunos = list;
     });
-  }
-
-  onChangeMenu(ev: any) {
-    const value = ev.detail.value;
-    if(value) {
-      this.pageMenu = value;
-    }
   }
 
   onClickEdit(data: AlunoModel) {

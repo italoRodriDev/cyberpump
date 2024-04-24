@@ -21,7 +21,7 @@ export class CadastroExerciciosPage implements OnInit {
   exercicio: ExercicioModel | undefined;
   listDiaTreino: Array<any> = this.formService.listDiasSemana;
   listDoencasCronicas: Array<any> = this.formService.listDoencasCronicas;
-  listEnfase: Array<any> = this.formService.listEnfase;
+  listEnfase: Array<any> = this.formService.listEnfaseMusculos;
   blockEdit: boolean = false;
 
   constructor(
