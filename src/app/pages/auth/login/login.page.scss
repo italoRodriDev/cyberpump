@@ -3,6 +3,9 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    height: 100%; /* Adicione esta propriedade */
+    width: 100%; /* Adicione esta propriedade */
+    background-color: var(--ion-color-secondary);
   }
   
   ion-header {
