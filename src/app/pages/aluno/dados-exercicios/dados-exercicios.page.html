@@ -1,0 +1,41 @@
+<ion-header mode="md">
+  <ion-toolbar color="secondary">
+    <ion-buttons>
+      <ion-button (click)="onClickBack()">
+        <ion-icon slot="icon-only" name="arrow-back-outline"></ion-icon>
+      </ion-button>
+      <ion-title></ion-title>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content mode="md">
+  <br />
+  <ion-item-divider>
+    <ion-title color="primary">DADOS</ion-title>
+  </ion-item-divider>
+  <ion-card mode="ios" *ngIf="aluno != null && diaTreino != null">
+    <ion-card-content>
+      <ion-card-title>{{ diaTreino.dia }}</ion-card-title>
+      <ion-label>
+        <p><strong>Aluno:</strong> {{ aluno.nome }}</p>
+        <p><strong>Doenças crônicas:</strong> {{ aluno.doencas }}</p>
+        <p><strong>Objetivo:</strong> {{ aluno.objetivo }}</p>
+        <p><strong>Nível:</strong> {{ aluno.nivel }}</p>
+      </ion-label>
+    </ion-card-content>
+    <ion-card-content *ngIf="exercicio != null">
+      <ion-card-title>{{ exercicio.nome }}</ion-card-title>
+      <ion-label>
+        <p>Ênfase: {{ exercicio.enfase }}</p>
+        <p>Séries: {{ exercicio.series }}</p>
+        <p>Repetições: {{ exercicio.repeticoes }}</p>
+        <p>Obs: {{ exercicio.obs }}</p>
+      </ion-label>
+    </ion-card-content>
+  </ion-card>
+  <br />
+  <br />
+  <br />
+  <app-animation-list></app-animation-list>
+</ion-content>

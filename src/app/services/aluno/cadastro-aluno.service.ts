@@ -106,8 +106,8 @@ export class CadastroAlunoService {
       .child(id)
       .remove()
       .then((value) => {
-        this.db.ref('DiasTreino').child('ID_PROFESSOR').child(id).remove();
-        this.db.ref('Exercicios').child('ID_PROFESSOR').child(id).remove();
+        this.db.ref('DiasTreino').child(this.idUser!).child(id).remove();
+        this.db.ref('Exercicios').child(this.idUser!).child(id).remove();
         this.alertService.showToast('Excludo com sucesso!');
       })
       .catch((error) => {

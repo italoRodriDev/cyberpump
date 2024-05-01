@@ -1,20 +1,22 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 import { NavController } from '@ionic/angular';
 import { AlunoModel } from 'src/app/models/aluno.model';
 import { DiaTreinoModel } from 'src/app/models/dia-treino.model';
 import { AlertsService } from 'src/app/services/alerts/alerts.service';
 import { CadastroAlunoService } from 'src/app/services/aluno/cadastro-aluno.service';
 import { CadastroDiaTreinoService } from 'src/app/services/aluno/cadastro-dia-treino.service';
+import { DadosAlunoService } from 'src/app/services/aluno/dados-aluno.service';
+import { DadosDiaTreinoService } from 'src/app/services/aluno/dados-dia-treino.service';
 import { FormService } from 'src/app/services/forms/form.service';
 
 @Component({
-  selector: 'app-cadastro-aluno',
-  templateUrl: './cadastro-aluno.page.html',
-  styleUrls: ['./cadastro-aluno.page.scss'],
+  selector: 'app-dados-aluno',
+  templateUrl: './dados-aluno.page.html',
+  styleUrls: ['./dados-aluno.page.scss'],
 })
-export class CadastroAlunoPage implements OnInit {
-  form: FormGroup = this.formService.formAluno;
+export class DadosAlunoPage implements OnInit {
   aluno: AlunoModel | undefined;
   listDoencasCronicas: Array<any> = this.formService.listDoencasCronicas;
   listObjetivos: Array<any> = this.formService.listObjetivos;
@@ -27,40 +29,47 @@ export class CadastroAlunoPage implements OnInit {
   constructor(
     private formService: FormService,
     private navCtrl: NavController,
-    private cadastroAlunoService: CadastroAlunoService,
-    private cadastroDiasTreinoService: CadastroDiaTreinoService,
-    private alertService: AlertsService
+    private dadosAlunoService: DadosAlunoService,
+    private dadosDiasTreinoService: DadosDiaTreinoService,
+    private alertService: AlertsService,
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit() {}
 
   ionViewDidEnter() {
+    this.getParamsUrl();
     this.getDataService();
   }
 
+  async getParamsUrl() {
+    this.route.params.subscribe((data: any) => {
+      if (data.id != null) {
+        const url = data.id.split('&');
+        const idProfessor = url[0];
+        const idAluno = url[1];
+        localStorage.setItem('data-p', idProfessor);
+        localStorage.setItem('data-a', idAluno);
+      }
+    });
+  }
+
   getDataService() {
-    this.form.reset();
-    this.cadastroAlunoService.aluno.subscribe((data) => {
+    this.dadosAlunoService.getData();
+    this.dadosAlunoService.aluno.subscribe((data) => {
       if (data) {
         this.aluno = data;
-        this.setDataForm();
+        if (this.aluno != null) {
+          this.dadosDiasTreinoService.getData(this.aluno!);
+          this.dadosDiasTreinoService.listDiasTreino.subscribe((list) => {
+            this.listDiasTreino = list;
+            this.validTypeTraining();
+          });
+        }
       } else {
         this.blockEdit = false;
       }
     });
-
-    if (this.aluno != null) {
-      this.cadastroDiasTreinoService.getData(this.aluno!);
-      this.cadastroDiasTreinoService.listDiasTreino.subscribe((list) => {
-        this.listDiasTreino = list;
-        this.validTypeTraining();
-      });
-    }
-  }
-
-  setDataForm() {
-    this.blockEdit = true;
-    this.form.patchValue(this.aluno!);
   }
 
   validTypeTraining() {
@@ -90,39 +99,9 @@ export class CadastroAlunoPage implements OnInit {
     }
   }
 
-  onClickSave() {
-    this.cadastroAlunoService.validFormData();
-  }
-
-  onClickCopyCode() {
-    //const url = 'https://cyber-pump.web.app';
-    const url = 'http://localhost:8100';
-    const idProfessor = this.cadastroAlunoService.idUser;
-    const idAluno = this.aluno?.id;
-    const idEnterprise = `${url}/dados-aluno/${idProfessor}&${idAluno}`;
-    navigator.clipboard.writeText(idEnterprise);
-    this.alertService.showAlert(
-      'Link do treino copiado',
-      'Agora você pode enviar o link para seu aluno para que ele possa acompanhar o treino.'
-    );
-  }
-
   onClickEditarDiaTreino(data: DiaTreinoModel) {
-    this.cadastroDiasTreinoService.bsDiaTreino.next(data);
-    this.navCtrl.navigateBack('cadastro-dia-treino');
-  }
-
-  onClickRemoveDiaTreino(data: DiaTreinoModel) {
-    this.cadastroDiasTreinoService.showAlertRemove(data, this.aluno!);
-  }
-
-  onClickCadastroDiaTreino() {
-    this.cadastroDiasTreinoService.bsDiaTreino.next(undefined);
-    this.navCtrl.navigateBack('cadastro-dia-treino');
-  }
-
-  onClickEdit() {
-    this.blockEdit = !this.blockEdit;
+    this.dadosDiasTreinoService.bsDiaTreino.next(data);
+    this.navCtrl.navigateBack('dados-dia-treino');
   }
 
   onClickBack() {

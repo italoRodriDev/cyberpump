@@ -41,7 +41,19 @@ const routes: Routes = [
   {
     path: 'termos-de-uso',
     loadChildren: () => import('./pages/auth/termos-de-uso/termos-de-uso.module').then( m => m.TermosDeUsoPageModule)
-  }
+  },
+  {
+    path: 'dados-aluno/:id',
+    loadChildren: () => import('./pages/aluno/dados-aluno/dados-aluno.module').then( m => m.DadosAlunoPageModule)
+  },
+  {
+    path: 'dados-dia-treino',
+    loadChildren: () => import('./pages/aluno/dados-dia-treino/dados-dia-treino.module').then( m => m.DadosDiaTreinoPageModule)
+  },
+  {
+    path: 'dados-exercicios',
+    loadChildren: () => import('./pages/aluno/dados-exercicios/dados-exercicios.module').then( m => m.DadosExerciciosPageModule)
+  },
 ];
 
 @NgModule({
