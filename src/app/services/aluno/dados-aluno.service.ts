@@ -1,10 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { AngularFireDatabase } from '@angular/fire/compat/database';
-import { FormService } from '../forms/form.service';
-import { AlertsService } from '../alerts/alerts.service';
-import { AlertController, NavController } from '@ionic/angular';
-import { FormGroup } from '@angular/forms';
 import { BehaviorSubject } from 'rxjs';
 import { AlunoModel } from 'src/app/models/aluno.model';
 
@@ -16,14 +11,7 @@ export class DadosAlunoService {
   public bsAluno = new BehaviorSubject<AlunoModel | undefined>(undefined);
   aluno = this.bsAluno.asObservable();
 
-  constructor(
-    private fireDatabase: AngularFireDatabase,
-    private fireAuth: AngularFireAuth,
-    private formService: FormService,
-    private alertService: AlertsService,
-    private navCtrl: NavController,
-    private alertCtrl: AlertController
-  ) {}
+  constructor(private fireDatabase: AngularFireDatabase) {}
 
   getData() {
     const idProfessor = localStorage.getItem('data-p');

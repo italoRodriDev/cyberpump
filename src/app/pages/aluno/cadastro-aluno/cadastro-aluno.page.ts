@@ -95,8 +95,8 @@ export class CadastroAlunoPage implements OnInit {
   }
 
   onClickCopyCode() {
-    //const url = 'https://cyber-pump.web.app';
-    const url = 'http://localhost:8100';
+    const url = 'https://cyber-pump.web.app';
+    //const url = 'http://localhost:8100';
     const idProfessor = this.cadastroAlunoService.idUser;
     const idAluno = this.aluno?.id;
     const idEnterprise = `${url}/dados-aluno/${idProfessor}&${idAluno}`;

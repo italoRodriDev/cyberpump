@@ -1,7 +1,9 @@
 <ion-header mode="md">
   <ion-toolbar color="secondary">
     <ion-buttons>
-      <img class="logo" src="assets/images/logo.png" />
+      <ion-title>
+        <img class="logo" src="assets/images/logo.png" />
+      </ion-title>
       <ion-button (click)="onClickExit()">
         <ion-icon slot="icon-only" name="exit-outline"></ion-icon>
       </ion-button>
@@ -9,11 +11,19 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content mode="md">
+  <section *ngIf="professor">
+    <ion-card mode="ios">
+      <ion-card-content>
+        <ion-card-title>{{ (professor.name!.split(' ')[0]) + ' ' + professor.name!.split(' ')[1] }}</ion-card-title>
+        <ion-card-subtitle>Professor</ion-card-subtitle>
+      </ion-card-content>
+    </ion-card>
+  </section>
   <section>
     <br />
     <ion-item-divider>
-      <ion-title color="dark">Alunos</ion-title>
+      <ion-title color="primary">SEUS ALUNOS</ion-title>
     </ion-item-divider>
     <br />
     <ion-list>
@@ -57,7 +67,7 @@
     horizontal="end"
   >
     <ion-fab-button (click)="onClickNew()">
-      <ion-icon name="add"></ion-icon>
+      <ion-icon name="person-add-outline"></ion-icon>
     </ion-fab-button>
   </ion-fab>
 </ion-content>

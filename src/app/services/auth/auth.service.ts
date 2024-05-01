@@ -11,6 +11,7 @@ import { AlertsService } from '../alerts/alerts.service';
 import { FormService } from '../forms/form.service';
 import { CadastroAlunoService } from '../aluno/cadastro-aluno.service';
 import { CadastroExerciciosService } from '../aluno/cadastro-exercicios.service';
+import { DadosProfessorService } from '../professor/dados-professor.service';
 
 @Injectable({
   providedIn: 'root',
@@ -30,9 +31,10 @@ export class AuthService {
     private fireDatabase: AngularFireDatabase,
     private navCtrl: NavController,
     private alertService: AlertsService,
+    private dadosProfessorService: DadosProfessorService,
     private cadastroAlunoService: CadastroAlunoService,
     private cadastroDiaTreinoService: CadastroDiaTreinoService,
-    private cadastroExerciciosService: CadastroExerciciosService
+    private cadastroExerciciosService: CadastroExerciciosService,
   ) {
     this.checkIfLogin();
   }
@@ -53,6 +55,8 @@ export class AuthService {
     this.cadastroAlunoService.idUser = id;
     this.cadastroDiaTreinoService.idUser = id;
     this.cadastroExerciciosService.idUser = id;
+    this.dadosProfessorService.idUser = id;
+    this.dadosProfessorService.getData();
   }
 
   navigationToHome() {

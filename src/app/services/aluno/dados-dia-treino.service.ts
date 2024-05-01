@@ -1,13 +1,8 @@
 import { Injectable } from '@angular/core';
-import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { AngularFireDatabase } from '@angular/fire/compat/database';
-import { FormService } from '../forms/form.service';
-import { AlertController, NavController } from '@ionic/angular';
-import { AlertsService } from '../alerts/alerts.service';
-import { FormGroup } from '@angular/forms';
 import { BehaviorSubject } from 'rxjs';
-import { DiaTreinoModel } from 'src/app/models/dia-treino.model';
 import { AlunoModel } from 'src/app/models/aluno.model';
+import { DiaTreinoModel } from 'src/app/models/dia-treino.model';
 
 @Injectable({
   providedIn: 'root',
@@ -22,14 +17,7 @@ export class DadosDiaTreinoService {
   );
   diaTreino = this.bsDiaTreino.asObservable();
 
-  constructor(
-    private fireDatabase: AngularFireDatabase,
-    private fireAuth: AngularFireAuth,
-    private formService: FormService,
-    private alertService: AlertsService,
-    private navCtrl: NavController,
-    private alertCtrl: AlertController
-  ) {}
+  constructor(private fireDatabase: AngularFireDatabase) {}
 
   getData(aluno: AlunoModel) {
     const idProfessor = localStorage.getItem('data-p');
