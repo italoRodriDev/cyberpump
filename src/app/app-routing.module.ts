@@ -1,10 +1,15 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
+import {
+  AngularFireAuthGuard,
+  redirectUnauthorizedTo,
+} from '@angular/fire/compat/auth-guard';
+const userNotAuthorized = () => redirectUnauthorizedTo(['login']);
 
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'home',
+    redirectTo: 'login',
     pathMatch: 'full'
   },
   {
@@ -12,8 +17,14 @@ const routes: Routes = [
     loadChildren: () => import('./pages/auth/login/login.module').then( m => m.LoginPageModule)
   },
   {
+    path: 'cadastro',
+    loadChildren: () => import('./pages/auth/signup/signup.module').then( m => m.SignupPageModule)
+  },
+  {
     path: 'home',
-    loadChildren: () => import('./pages/home/home.module').then( m => m.HomePageModule)
+    loadChildren: () => import('./pages/home/home.module').then( m => m.HomePageModule),
+    canActivate: [AngularFireAuthGuard],
+    data: { userNotAuthorized },
   },
   {
     path: 'cadastro-aluno',
@@ -27,6 +38,10 @@ const routes: Routes = [
     path: 'cadastro-exercicios',
     loadChildren: () => import('./pages/aluno/cadastro-exercicios/cadastro-exercicios.module').then( m => m.CadastroExerciciosPageModule)
   },
+  {
+    path: 'termos-de-uso',
+    loadChildren: () => import('./pages/auth/termos-de-uso/termos-de-uso.module').then( m => m.TermosDeUsoPageModule)
+  }
 ];
 
 @NgModule({

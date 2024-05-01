@@ -318,6 +318,12 @@ export class FormService {
     password: this.passValidator,
   });
 
+  formSignUp: FormGroup = this.fb.group({
+    name: this.nameValidator,
+    email: this.emailValidator,
+    password: this.passValidator,
+  });
+
   formAluno: FormGroup = this.fb.group({
     id: [],
     nome: this.nameValidator,

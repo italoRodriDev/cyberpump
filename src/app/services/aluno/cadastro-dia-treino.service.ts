@@ -10,17 +10,18 @@ import { AlunoModel } from 'src/app/models/aluno.model';
 import { DiaTreinoModel } from 'src/app/models/dia-treino.model';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class CadastroDiaTreinoService {
-
   formDiaTreino: FormGroup = this.formService.formDiaTreino;
   db = this.fireDatabase.database;
   idUser: string | undefined = '';
   public bsDiasTreino = new BehaviorSubject<Array<any>>([]);
   listDiasTreino = this.bsDiasTreino.asObservable();
 
-  public bsDiaTreino = new BehaviorSubject<DiaTreinoModel | undefined>(undefined);
+  public bsDiaTreino = new BehaviorSubject<DiaTreinoModel | undefined>(
+    undefined
+  );
   diaTreino = this.bsDiaTreino.asObservable();
 
   constructor(
@@ -28,35 +29,35 @@ export class CadastroDiaTreinoService {
     private fireAuth: AngularFireAuth,
     private formService: FormService,
     private alertService: AlertsService,
-    private navCtrl: NavController, 
+    private navCtrl: NavController,
     private alertCtrl: AlertController
-  ) {
-    this.getUid();
-  }
-
-  getUid() {
-    this.fireAuth.currentUser.then((i) => {
-      this.idUser = i?.uid;
-    });
-  }
+  ) {}
 
   getData(aluno: AlunoModel) {
     this.db
       .ref('DiasTreino')
-      .child('ID_PROFESSOR')
+      .child(this.idUser!)
       .child(aluno.id)
       .on('value', (snapshot) => {
         const data = snapshot.val();
         this.bsDiasTreino.next([]);
         if (data) {
           const array = Object.keys(data).map((index) => data[index]);
-  
+
           // Função de comparação para os dias da semana
-          const diasSemana = ['Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado', 'Domingo'];
+          const diasSemana = [
+            'Segunda',
+            'Terça',
+            'Quarta',
+            'Quinta',
+            'Sexta',
+            'Sábado',
+            'Domingo',
+          ];
           array.sort((a, b) => {
             return diasSemana.indexOf(a.dia) - diasSemana.indexOf(b.dia);
           });
-  
+
           this.bsDiasTreino.next(array);
         }
       });
@@ -81,7 +82,7 @@ export class CadastroDiaTreinoService {
   saveData(id: string, aluno: AlunoModel) {
     this.db
       .ref('DiasTreino')
-      .child('ID_PROFESSOR')
+      .child(this.idUser!)
       .child(aluno.id)
       .child(id)
       .update(this.formDiaTreino.value)
@@ -99,32 +100,30 @@ export class CadastroDiaTreinoService {
   }
 
   async showAlertRemove(data: DiaTreinoModel, aluno: AlunoModel) {
-    const alert = await  this.alertCtrl.create({
+    const alert = await this.alertCtrl.create({
       header: 'Deseja excluir?',
       subHeader: data.dia,
       message: 'Ao confirmar será excluído.',
       buttons: [
         {
           text: 'Cancelar',
-          handler: () => {}
+          handler: () => {},
         },
         {
           text: 'Excluir',
           handler: () => {
             this.remove(data?.id, aluno);
-          }
+          },
         },
-      ]
+      ],
     });
     alert.present();
-    
   }
 
   remove(id: string, aluno: AlunoModel) {
-
     this.db
       .ref('DiasTreino')
-      .child('ID_PROFESSOR')
+      .child(this.idUser!)
       .child(aluno.id)
       .child(id)
       .remove()

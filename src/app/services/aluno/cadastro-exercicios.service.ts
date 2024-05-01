@@ -11,17 +11,18 @@ import { ExercicioModel } from 'src/app/models/exercicio.model';
 import { DiaTreinoModel } from 'src/app/models/dia-treino.model';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class CadastroExerciciosService {
-  
   formExercicio: FormGroup = this.formService.formExercicio;
   db = this.fireDatabase.database;
   idUser: string | undefined = '';
   public bsExercicios = new BehaviorSubject<Array<any>>([]);
   listExercicios = this.bsExercicios.asObservable();
 
-  public bsExercicio = new BehaviorSubject<ExercicioModel | undefined>(undefined);
+  public bsExercicio = new BehaviorSubject<ExercicioModel | undefined>(
+    undefined
+  );
   exercicio = this.bsExercicio.asObservable();
 
   constructor(
@@ -29,22 +30,14 @@ export class CadastroExerciciosService {
     private fireAuth: AngularFireAuth,
     private formService: FormService,
     private alertService: AlertsService,
-    private navCtrl: NavController, 
+    private navCtrl: NavController,
     private alertCtrl: AlertController
-  ) {
-    this.getUid();
-  }
-
-  getUid() {
-    this.fireAuth.currentUser.then((i) => {
-      this.idUser = i?.uid;
-    });
-  }
+  ) {}
 
   getData(aluno: AlunoModel, diaTreino: DiaTreinoModel) {
     this.db
       .ref('Exercicios')
-      .child('ID_PROFESSOR')
+      .child(this.idUser!)
       .child(aluno.id)
       .child(diaTreino.id)
       .on('value', (snapshot) => {
@@ -67,7 +60,7 @@ export class CadastroExerciciosService {
         this.formExercicio.patchValue({
           id: id,
           idAluno: aluno.id,
-          idDiaTreino: diaTreino.id
+          idDiaTreino: diaTreino.id,
         });
         this.saveData(id, aluno, diaTreino);
       }
@@ -77,7 +70,7 @@ export class CadastroExerciciosService {
   saveData(id: string, aluno: AlunoModel, diaTreino: DiaTreinoModel) {
     this.db
       .ref('Exercicios')
-      .child('ID_PROFESSOR')
+      .child(this.idUser!)
       .child(aluno.id)
       .child(diaTreino.id)
       .child(id)
@@ -95,33 +88,39 @@ export class CadastroExerciciosService {
       });
   }
 
-  async showAlertRemove(aluno: AlunoModel, diaTreino: DiaTreinoModel, exercicio: ExercicioModel) {
-    const alert = await  this.alertCtrl.create({
+  async showAlertRemove(
+    aluno: AlunoModel,
+    diaTreino: DiaTreinoModel,
+    exercicio: ExercicioModel
+  ) {
+    const alert = await this.alertCtrl.create({
       header: 'Deseja excluir?',
       subHeader: exercicio.nome,
       message: 'Ao confirmar será excluído.',
       buttons: [
         {
           text: 'Cancelar',
-          handler: () => {}
+          handler: () => {},
         },
         {
           text: 'Excluir',
           handler: () => {
             this.remove(aluno, diaTreino, exercicio);
-          }
+          },
         },
-      ]
+      ],
     });
     alert.present();
-    
   }
 
-  remove(aluno: AlunoModel, diaTreino: DiaTreinoModel, exercicio: ExercicioModel) {
-
+  remove(
+    aluno: AlunoModel,
+    diaTreino: DiaTreinoModel,
+    exercicio: ExercicioModel
+  ) {
     this.db
       .ref('Exercicios')
-      .child('ID_PROFESSOR')
+      .child(this.idUser!)
       .child(aluno.id)
       .child(diaTreino.id)
       .child(exercicio.id)

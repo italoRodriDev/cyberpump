@@ -26,22 +26,14 @@ export class CadastroAlunoService {
     private fireAuth: AngularFireAuth,
     private formService: FormService,
     private alertService: AlertsService,
-    private navCtrl: NavController, 
+    private navCtrl: NavController,
     private alertCtrl: AlertController
-  ) {
-    this.getUid();
-  }
-
-  getUid() {
-    this.fireAuth.currentUser.then((i) => {
-      this.idUser = i?.uid;
-    });
-  }
+  ) {}
 
   getData() {
     this.db
       .ref('Alunos')
-      .child('ID_PROFESSOR')
+      .child(this.idUser!)
       .on('value', (snapshot) => {
         const data = snapshot.val();
         this.bsAlunos.next([]);
@@ -70,7 +62,7 @@ export class CadastroAlunoService {
   saveData(id: string) {
     this.db
       .ref('Alunos')
-      .child('ID_PROFESSOR')
+      .child(this.idUser!)
       .child(id)
       .update(this.formAluno.value)
       .then((value) => {
@@ -87,47 +79,39 @@ export class CadastroAlunoService {
   }
 
   async showAlertRemove(data: AlunoModel) {
-    const alert = await  this.alertCtrl.create({
+    const alert = await this.alertCtrl.create({
       header: 'Deseja excluir?',
       subHeader: data.nome,
       message: 'Ao confirmar será excluído.',
       buttons: [
         {
           text: 'Cancelar',
-          handler: () => {}
+          handler: () => {},
         },
         {
           text: 'Excluir',
           handler: () => {
             this.remove(data?.id);
-          }
+          },
         },
-      ]
+      ],
     });
     alert.present();
-    
   }
 
   remove(id: string) {
     this.db
       .ref('Alunos')
-      .child('ID_PROFESSOR')
+      .child(this.idUser!)
       .child(id)
       .remove()
       .then((value) => {
-        this.db
-        .ref('DiasTreino')
-        .child('ID_PROFESSOR')
-        .child(id).remove();
-        this.db
-        .ref('Exercicios')
-        .child('ID_PROFESSOR')
-        .child(id).remove();
+        this.db.ref('DiasTreino').child('ID_PROFESSOR').child(id).remove();
+        this.db.ref('Exercicios').child('ID_PROFESSOR').child(id).remove();
         this.alertService.showToast('Excludo com sucesso!');
       })
       .catch((error) => {
         this.alertService.showToast('Erro ao excluir cadastro!');
       });
   }
-
 }
