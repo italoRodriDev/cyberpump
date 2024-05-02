@@ -27,6 +27,11 @@ export class DadosAlunoPage implements OnInit {
   blockEdit: boolean = false;
   tipoTreino: any;
   listDiasTreino: Array<DiaTreinoModel> = [];
+  calcIMC: string = '0.00';
+  diagnosticoIMC: string = '0.00';
+  idade: string = '0';
+  pesoIdeal: string = '0.00';
+  emagrecer: string = '0.00';
 
   constructor(
     private formService: FormService,
@@ -68,12 +73,87 @@ export class DadosAlunoPage implements OnInit {
           this.dadosDiasTreinoService.listDiasTreino.subscribe((list) => {
             this.listDiasTreino = list;
             this.validTypeTraining();
+            this.calculatorIMC(this.aluno?.peso!, this.aluno?.altura!);
+            this.calculatorIdade(this.aluno?.dataNascimento!);
           });
         }
       } else {
         this.blockEdit = false;
       }
     });
+  }
+
+  calculatorIMC(peso: number, altura: number) {
+    // Convertendo altura para metros, se necessário
+    if (altura > 3) {
+      altura /= 100; // Convertendo de centímetros para metros
+    }
+
+    // Calculando o IMC
+    var imc = peso / (altura * altura);
+
+    this.calcIMC = imc.toFixed(2); // Arredondando o resultado para 2 casas decimais
+
+    // Determinando a categoria do IMC
+     // Determinando a categoria do IMC
+     if (imc < 18.5) {
+      this.diagnosticoIMC = 'Abaixo do peso';
+    } else if (imc < 24.9) {
+      this.diagnosticoIMC = 'Peso normal';
+    } else if (imc < 29.9) {
+      this.diagnosticoIMC = 'Sobrepeso';
+    } else if (imc < 34.9) {
+      this.diagnosticoIMC = 'Obesidade grau I (leve)';
+    } else if (imc < 39.9) {
+      this.diagnosticoIMC = 'Obesidade grau II (moderada)';
+    } else {
+      this.diagnosticoIMC = 'Obesidade grau III (grave)';
+    }
+
+    // Calculando o peso ideal (IMC ideal = 22)
+    var pesoIdeal = 22 * (altura * altura);
+    this.pesoIdeal = pesoIdeal.toFixed(2).toString();
+    var emagrecer = peso - pesoIdeal;
+    if(emagrecer > 0) {
+      this.emagrecer = emagrecer.toFixed(2).toString();
+    } else {
+      this.emagrecer = 'ND';
+    }
+    
+  }
+
+  calculatorIdade(dataNascimento: string) {
+    // Obtendo a data atual
+    var hoje = moment();
+
+    // Convertendo a data de nascimento para um objeto Moment.js
+    var dataNascMoment = moment(dataNascimento);
+
+    // Calculando a diferença de anos entre a data de nascimento e a data atual
+    var idade = hoje.diff(dataNascMoment, 'years');
+
+    if (idade < 1) {
+      this.idade = 'Recém-nascido';
+    } else if (idade == 1) {
+      this.idade = `${idade.toString()} ano`;
+    } else if (idade > 1) {
+      this.idade = `${idade.toString()} anos`;
+    }
+  }
+
+  formatPhone(telefone: string): string {
+    // Remover todos os caracteres não numéricos do telefone
+    telefone = telefone.replace(/\D/g, '');
+
+    // Verificar se o número possui 9 dígitos (formato com nono dígito)
+    if (telefone.length === 11) {
+      telefone = telefone.replace(/^(\d{2})(\d{5})(\d{4})/, '($1) $2-$3');
+    } else {
+      // Aplicar a máscara padrão (xx) xxxx-xxxx
+      telefone = telefone.replace(/^(\d{2})(\d{4})(\d{4})/, '($1) $2-$3');
+    }
+
+    return telefone;
   }
 
   isDayShare(): boolean {

@@ -16,18 +16,39 @@
   </ion-item-divider>
   <ion-card mode="ios" *ngIf="aluno != null">
     <ion-card-content>
-      <ion-item>
-        <ion-label>{{ tipoTreino?.titulo }}</ion-label>
+      <ion-item *ngIf="listDiasTreino.length">
+        <ion-label style="font-weight: bold;" color="dark">{{ tipoTreino?.titulo }}</ion-label>
         <ion-avatar slot="end">
           <img [src]="tipoTreino?.icon" />
         </ion-avatar>
       </ion-item>
+      <ion-row>
+        <ion-col size="4">
+          <p><strong>Altura:</strong> {{ aluno.altura }}cm</p>
+        </ion-col>
+        <ion-col size="4">
+          <p><strong>Peso:</strong> {{ aluno.peso }}kg</p>
+        </ion-col>
+        <ion-col size="4">
+          <p><strong>IMC:</strong> {{ calcIMC }}</p>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="12">
+          <p><strong>Diagnóstico: </strong>{{  diagnosticoIMC }}</p>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="12">
+          <strong>Peso ideal: </strong>{{ pesoIdeal }}kg, <strong>Objetivo: </strong> {{ emagrecer }}kg
+        </ion-col>
+      </ion-row>
       <br />
       <ion-card-title>{{ aluno.nome }}</ion-card-title>
       <ion-label>
+        <p><strong>Idade:</strong> {{ idade }}</p>
         <p><strong>Academia:</strong> {{ aluno.academia }}</p>
-        <p><strong>E-mail:</strong> {{ aluno.email }}</p>
-        <p><strong>Telefone:</strong> {{ aluno.telefone }}</p>
+        <p><strong>Telefone:</strong> {{ formatPhone(aluno.telefone) }}</p>
         <p><strong>Doenças crônicas:</strong> {{ aluno.doencas }}</p>
         <p><strong>Objetivo:</strong> {{ aluno.objetivo }}</p>
         <p><strong>Nível:</strong> {{ aluno.nivel }}</p>
@@ -47,6 +68,7 @@
         [disabled]="!form.valid"
       >
         <ion-label color="light">Compartilhar treino</ion-label>
+        <ion-icon name="share-social-outline"></ion-icon>
       </ion-button>
     </ion-card-content>
   </ion-card>
@@ -154,6 +176,44 @@
               >{{ item.titulo }}</ion-select-option
             >
           </ion-select>
+        </ion-item>
+        <br />
+        <ion-row>
+          <ion-col>
+            <ion-item [disabled]="blockEdit">
+              <ion-input
+                formControlName="peso"
+                label="Peso (Kg)"
+                labelPlacement="stacked"
+                placeholder="0.00"
+                required
+                type="number"
+                [readonly]="false"
+              ></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col>
+            <ion-item [disabled]="blockEdit">
+              <ion-input
+                formControlName="altura"
+                label="Altura (cm)"
+                labelPlacement="stacked"
+                placeholder="0.00"
+                required
+                type="number"
+                [readonly]="false"
+              ></ion-input>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+        <br />
+        <ion-item [disabled]="blockEdit">
+          <ion-datetime
+            formControlName="dataNascimento"
+            locale="pt-BR"
+            presentation="date"
+            mode="ios"
+          ></ion-datetime>
         </ion-item>
       </form>
     </ion-card-content>

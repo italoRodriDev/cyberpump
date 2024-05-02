@@ -333,6 +333,9 @@ export class FormService {
     doencas: this.reqValidator,
     objetivo: this.reqValidator,
     nivel: this.reqValidator,
+    peso: this.reqValidator,
+    altura: this.reqValidator,
+    dataNascimento: this.reqValidator
   });
 
   formDiaTreino: FormGroup = this.fb.group({
