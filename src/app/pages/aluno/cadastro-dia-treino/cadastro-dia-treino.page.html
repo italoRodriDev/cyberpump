@@ -20,7 +20,7 @@
       <ion-label>
         <p><strong>Aluno: {{ aluno.nome }}</strong></p>
         <p><strong>Ênfase:</strong> {{ diaTreino.enfase }}</p>
-        <p><strong>Observações:</strong> {{ diaTreino.obs }}</p>
+        <p>Observações: {{ (diaTreino.obs.length ? diaTreino.obs : 'Nenhuma') }}</p>
       </ion-label>
     </ion-card-content>
     <ion-card-content>
@@ -112,7 +112,7 @@
                 >{{ item?.series }} séries de {{ item?.repeticoes }}
                 repetições.</ion-label
               >
-              <ion-label>Ênfase: {{ item?.obs }}</ion-label>
+              <ion-label>Obs: {{ (item?.obs?.length ? item?.obs : 'Nenhuma') }}</ion-label>
             </p>
           </ion-label>
         </ion-item>

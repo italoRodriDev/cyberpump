@@ -340,7 +340,7 @@ export class FormService {
     idAluno: [],
     dia: this.reqValidator,
     enfase: this.reqValidator,
-    obs: this.reqValidator,
+    obs: [],
   });
 
   formExercicio: FormGroup = this.fb.group({
@@ -351,7 +351,7 @@ export class FormService {
     enfase: this.reqValidator,
     series: this.reqValidator,
     repeticoes: this.reqValidator,
-    obs: this.reqValidator,
+    obs: [],
   });
 
   constructor(private fb: FormBuilder) {
@@ -360,6 +360,16 @@ export class FormService {
 
   resetDataForm() {
     this.formSignIn.reset();
+    this.formSignUp.reset();
     this.formAluno.reset();
+    this.formDiaTreino.reset();
+    this.formExercicio.reset();
+
+    this.formDiaTreino.patchValue({
+      obs: ""
+    });
+    this.formExercicio.patchValue({
+      obs: ""
+    });
   }
 }

@@ -1,4 +1,4 @@
-<ion-content mode="md">
+<ion-content mode="md" color="secondary">
   <!--Login-->
   <section class="center-content">
     <img src="assets/images/logo.png" />
@@ -15,10 +15,11 @@
               <ion-label position="stacked">Nome completo</ion-label>
               <ion-input
                 formControlName="name"
-                placeholder="Digite seu nome completo"
-                type="email"
+                placeholder="Digite seu nome"
+                type="text"
                 minlength="8"
                 maxlength="100"
+                required
               ></ion-input>
             </ion-item>
             <ion-item lines="none" color="light">
@@ -29,16 +30,18 @@
                 type="email"
                 minlength="8"
                 maxlength="100"
+                required
               ></ion-input>
             </ion-item>
             <ion-item lines="none" color="light">
-              <ion-label position="stacked">Crie sua senha</ion-label>
+              <ion-label position="stacked">Crie sua senha (8 digitos)</ion-label>
               <ion-input
                 formControlName="password"
-                placeholder="Digite uma senha"
+                placeholder="Digite sua senha"
                 [type]="!viewPass ? 'password' : 'text'"
                 minlength="8"
-                maxlength="100"
+                maxlength="20"
+                required
               ></ion-input>
               <ion-icon
                 (click)="viewPass = !viewPass"

@@ -30,7 +30,7 @@
         <p>Ênfase: {{ exercicio.enfase }}</p>
         <p>Séries: {{ exercicio.series }}</p>
         <p>Repetições: {{ exercicio.repeticoes }}</p>
-        <p>Obs: {{ exercicio.obs }}</p>
+        <p>Observações: {{ (exercicio.obs.length ? exercicio.obs : 'Nenhuma') }}</p>
       </ion-label>
     </ion-card-content>
     <ion-card-content>

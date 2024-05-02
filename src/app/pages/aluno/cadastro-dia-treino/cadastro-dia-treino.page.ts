@@ -33,14 +33,15 @@ export class CadastroDiaTreinoPage implements OnInit {
     private cadastroExercicioService: CadastroExerciciosService
   ) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.formService.resetDataForm();
+  }
 
   ionViewDidEnter() {
     this.getDataService();
   }
 
   getDataService() {
-    this.form.reset();
     this.cadastroAlunoService.aluno.subscribe((data) => {
       if (data) {
         this.aluno = data;

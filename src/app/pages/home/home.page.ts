@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NavController } from '@ionic/angular';
+import * as moment from 'moment';
 import { AlunoModel } from 'src/app/models/aluno.model';
 import { ProfessorModel } from 'src/app/models/professor.model';
 import { CadastroAlunoService } from 'src/app/services/aluno/cadastro-aluno.service';
@@ -34,6 +35,20 @@ export class HomePage implements OnInit {
     this.cadastroAlunoService.listAlunos.subscribe((list) => {
       this.listAlunos = list;
     });
+  }
+
+  isDayShare(): boolean {
+    // Obtém a data atual
+    const currentDate = moment();
+
+    // Verifica se a data atual está entre os dias 20 e 28 do mês
+    const isBetweenDates = currentDate.date() >= 1 && currentDate.date() <= 15;
+
+    return isBetweenDates;
+  }
+
+  onClickOpenInstagram() {
+    this.dadosProfessorService.openInstagram();
   }
 
   onClickEdit(data: AlunoModel) {

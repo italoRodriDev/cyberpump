@@ -36,13 +36,18 @@ export class SignupPage implements OnInit {
   }
 
   onClickContinue() {
-    if (this.termos == true) {
-      this.isLoading = true;
-      this.authService.signUp().then((loading) => {
-        this.isLoading = loading;
-      });
+    const passoword = this.formSignUp.controls['password'].value;
+    if (passoword.length >= 8) {
+      if (this.termos == true) {
+        this.isLoading = true;
+        this.authService.signUp().then((loading) => {
+          this.isLoading = loading;
+        });
+      } else {
+        this.onClickShowModalTermos();
+      }
     } else {
-      this.onClickShowModalTermos();
+      this.alertService.showToast('Crie uma senha maior');
     }
   }
 
@@ -50,12 +55,12 @@ export class SignupPage implements OnInit {
     const modal = await this.modalCtrl.create({
       component: TermosDeUsoPage,
       componentProps: {
-        termos: this.termos
-      }
+        termos: this.termos,
+      },
     });
     modal.present();
     const { data } = await modal.onWillDismiss();
-    if(data && data.termos) {
+    if (data && data.termos) {
       this.termos = data.termos;
     }
   }

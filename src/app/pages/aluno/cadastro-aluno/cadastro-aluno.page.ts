@@ -32,14 +32,15 @@ export class CadastroAlunoPage implements OnInit {
     private alertService: AlertsService
   ) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.formService.resetDataForm();
+  }
 
   ionViewDidEnter() {
     this.getDataService();
   }
 
   getDataService() {
-    this.form.reset();
     this.cadastroAlunoService.aluno.subscribe((data) => {
       if (data) {
         this.aluno = data;
@@ -99,11 +100,11 @@ export class CadastroAlunoPage implements OnInit {
     //const url = 'http://localhost:8100';
     const idProfessor = this.cadastroAlunoService.idUser;
     const idAluno = this.aluno?.id;
-    const idEnterprise = `${url}/dados-aluno/${idProfessor}&${idAluno}`;
-    navigator.clipboard.writeText(idEnterprise);
+    const idTreino = `${url}/dados-aluno/${idProfessor}&${idAluno}`;
+    navigator.clipboard.writeText(idTreino);
     this.alertService.showAlert(
       'Link do treino copiado',
-      'Agora você pode enviar o link para seu aluno para que ele possa acompanhar o treino.'
+      'Agora você pode compartilhar o link com seu aluno para que ele possa acompanhar o treino.'
     );
   }
 

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { NavController } from '@ionic/angular';
+import * as moment from 'moment';
 import { AlunoModel } from 'src/app/models/aluno.model';
 import { DiaTreinoModel } from 'src/app/models/dia-treino.model';
 import { AlertsService } from 'src/app/services/alerts/alerts.service';
@@ -10,6 +11,7 @@ import { CadastroDiaTreinoService } from 'src/app/services/aluno/cadastro-dia-tr
 import { DadosAlunoService } from 'src/app/services/aluno/dados-aluno.service';
 import { DadosDiaTreinoService } from 'src/app/services/aluno/dados-dia-treino.service';
 import { FormService } from 'src/app/services/forms/form.service';
+import { DadosProfessorService } from 'src/app/services/professor/dados-professor.service';
 
 @Component({
   selector: 'app-dados-aluno',
@@ -31,14 +33,16 @@ export class DadosAlunoPage implements OnInit {
     private navCtrl: NavController,
     private dadosAlunoService: DadosAlunoService,
     private dadosDiasTreinoService: DadosDiaTreinoService,
+    private dadosProfessorService: DadosProfessorService,
     private alertService: AlertsService,
     private route: ActivatedRoute
   ) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.getParamsUrl();
+  }
 
   ionViewDidEnter() {
-    this.getParamsUrl();
     this.getDataService();
   }
 
@@ -70,6 +74,20 @@ export class DadosAlunoPage implements OnInit {
         this.blockEdit = false;
       }
     });
+  }
+
+  isDayShare(): boolean {
+    // Obtém a data atual
+    const currentDate = moment();
+
+    // Verifica se a data atual está entre os dias 20 e 28 do mês
+    const isBetweenDates = currentDate.date() >= 1 && currentDate.date() <= 15;
+
+    return isBetweenDates;
+  }
+
+  onClickOpenInstagram() {
+    this.dadosProfessorService.openInstagram();
   }
 
   validTypeTraining() {

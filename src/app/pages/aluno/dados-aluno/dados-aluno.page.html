@@ -34,6 +34,18 @@
         </ion-label>
       </ion-card-content>
     </ion-card>
+    <ion-card mode="ios" *ngIf="isDayShare()">
+      <ion-card-content>
+        <ion-card-title>Não esqueça do nosso compromisso.</ion-card-title>
+        <ion-card-subtitle>
+          Para continuar usando nosso aplicativo grátis e continuar tendo acesso aos seus treinos, siga nosso perfil do Instagram.
+        </ion-card-subtitle>
+        <br />
+        <ion-button (click)="onClickOpenInstagram()"
+          >Seguir e compartilhar</ion-button
+        >
+      </ion-card-content>
+    </ion-card>
     <br />
     <ion-item-divider>
       <ion-title color="primary">DIAS DE TREINO</ion-title>

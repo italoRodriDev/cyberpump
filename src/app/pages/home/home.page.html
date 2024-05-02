@@ -15,8 +15,25 @@
   <section *ngIf="professor">
     <ion-card mode="ios">
       <ion-card-content>
-        <ion-card-title>{{ (professor.name!.split(' ')[0]) + ' ' + professor.name!.split(' ')[1] }}</ion-card-title>
+        <ion-card-title
+          >{{ (professor.name!.split(' ')[0]) + ' ' + professor.name!.split('
+          ')[1] }}</ion-card-title
+        >
         <ion-card-subtitle>Professor</ion-card-subtitle>
+      </ion-card-content>
+    </ion-card>
+    <ion-card mode="ios" *ngIf="isDayShare()">
+      <ion-card-content>
+        <ion-card-title>Não esqueça do nosso compromisso</ion-card-title>
+        <ion-card-subtitle>
+          Para continuar usando nosso aplicativo grátis, siga nosso perfil do Instagram
+          e compartilhe ao menos uma postagem do nosso perfil com seus seguidores todos os
+          meses.
+        </ion-card-subtitle>
+        <br />
+        <ion-button (click)="onClickOpenInstagram()"
+          >Seguir e compartilhar</ion-button
+        >
       </ion-card-content>
     </ion-card>
   </section>
@@ -61,11 +78,7 @@
   <br />
   <br />
   <app-animation-list *ngIf="listAlunos.length"></app-animation-list>
-  <ion-fab
-    slot="fixed"
-    vertical="bottom"
-    horizontal="end"
-  >
+  <ion-fab slot="fixed" vertical="bottom" horizontal="end">
     <ion-fab-button (click)="onClickNew()">
       <ion-icon name="person-add-outline"></ion-icon>
     </ion-fab-button>
