@@ -1,0 +1,17 @@
+name: run
+
+on:
+    push: 
+        branches:
+                - master
+
+jobs:
+  build:
+      runs-on: ubuntu-latest
+      steps:
+            - users: actions/checkout@v2
+            - users: actions/setup-python@v2
+              with:
+                  python-version: 3.8
+            - run: |
+                python print2.py
